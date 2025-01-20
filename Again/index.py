@@ -18,7 +18,10 @@ def display_banner():
 ██║░░██║╚██████╔╝██║░░██║██║██║░╚███║░░░██╗░░
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
     """)
-    print(f"{green}0.0.1{reset}\n")  # Display version in green
+    # Display version at the bottom left corner
+    version = f"{green}\t\t\tv0.0.1 {reset}"
+    print(f"\n{version}\n")  # Version at the bottom left corner
+
 
 # Main script logic
 def main():
@@ -28,7 +31,7 @@ def main():
     while True:
         print("\nSelect a task to perform:")
         print("1. Automation Tool ")
-        print("2. ")
+        print("2. Domain ")
         print("3. ")
         print("4. ")
         print("5. Exit\n")
