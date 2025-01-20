@@ -107,11 +107,14 @@ def check_security_headers(subdomain):
         print(f"Failed to check security headers for {subdomain}: {e}")
 
 
-def run_nmap_scan(subdomain):
+def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
-    print(f"\nRunning Nmap scan on {subdomain}...")
+    print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
     try:
-        subprocess.run(f"nmap {subdomain}", shell=True, check=True)
+        if scan_type == "fast":
+            subprocess.run(f"nmap -T4 -F {subdomain}", shell=True, check=True)  # Fast scan
+        else:
+            subprocess.run(f"nmap {subdomain}", shell=True, check=True)  # Full scan
         print(f"Nmap scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
@@ -147,8 +150,8 @@ def run_vulnerability_scans():
         # Check Security Headers
         check_security_headers(subdomain)
 
-        # Nmap Scan for open ports
-        run_nmap_scan(subdomain)
+        # Nmap Fast Scan for open ports
+        run_nmap_scan(subdomain, scan_type="fast")
 
         # SSL/TLS Scan
         run_sslscan(subdomain)
@@ -159,7 +162,7 @@ def subdomain_submenu():
     while True:
         print("\nSubdomain Submenu:")
         print("1. Enumerate Subdomains with Sublist3r")
-        print("2. Run Vulnerability Scans (Nmap, SSL, HTTP headers)")
+        print("2. Run Vulnerability Scans")
         print("3. Return to Domain Menu\n")
 
         choice = input("Enter your choice [1-3]: ")
