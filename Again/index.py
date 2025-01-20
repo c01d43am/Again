@@ -20,7 +20,7 @@ def display_banner():
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
     """)
     # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.0.5 {reset}"
+    version = f"{green}\t\t\tv0.0.6 {reset}"
     print(f"\n{version}\n")  # Version at the bottom left corner
 
 
