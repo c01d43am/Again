@@ -2,31 +2,23 @@ import os
 import subprocess
 
 
-def is_sublister_installed():
-    """Checks if Sublist3r is installed."""
-    # Check if Sublist3r exists in the home directory
+def check_and_install_sublister():
+    """Checks if Sublist3r is installed. Installs it if not found."""
     sublist3r_path = os.path.expanduser("~/Sublist3r/sublist3r.py")
     if os.path.exists(sublist3r_path):
+        print("Sublist3r is already installed.")
         return True
-
-    # Check globally if Sublist3r is available (customized installations)
-    try:
-        subprocess.run(["sublist3r", "-h"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        return True
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return False
-
-
-def install_sublister():
-    """Installs Sublist3r if it is not installed."""
-    print("Sublist3r is not installed. Installing now...")
-    try:
-        os.system("git clone https://github.com/aboul3la/Sublist3r.git ~/Sublist3r")
-        os.system("sudo apt update && sudo apt install -y python3-pip")
-        os.system("pip3 install -r ~/Sublist3r/requirements.txt")
-        print("Sublist3r has been installed successfully.")
-    except Exception as e:
-        print(f"Failed to install Sublist3r: {e}")
+    else:
+        print("Sublist3r is not installed. Installing now...")
+        try:
+            os.system("git clone https://github.com/aboul3la/Sublist3r.git ~/Sublist3r")
+            os.system("sudo apt update && sudo apt install -y python3-pip")
+            os.system("pip3 install -r ~/Sublist3r/requirements.txt")
+            print("Sublist3r has been installed successfully.")
+            return True
+        except Exception as e:
+            print(f"Failed to install Sublist3r: {e}")
+            return False
 
 
 def run_sublister(domain):
@@ -58,11 +50,8 @@ def subdomain_submenu():
             print("Enumerate Subdomains with Sublist3r selected.")
             domain = input("Enter the domain to enumerate subdomains for: ")
             if domain:
-                if is_sublister_installed():
-                    print("Sublist3r is already installed.")
-                else:
-                    install_sublister()  # Install Sublist3r if not installed
-                run_sublister(domain)  # Run Sublist3r for the given domain
+                if check_and_install_sublister():  # Check and install Sublist3r if not installed
+                    run_sublister(domain)  # Run Sublist3r for the given domain
             else:
                 print("No domain entered. Please try again.")
         elif choice == "2":
