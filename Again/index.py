@@ -1,5 +1,5 @@
 import sys
-from tools import automation_submenu
+from scan import automation_submenu
 from domain import subdomain_submenu
 # Function to display the banner with color
 def display_banner():
