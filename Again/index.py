@@ -1,6 +1,6 @@
 import sys
 from tools import automation_submenu
-
+from domain import subdomain_submenu
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
@@ -30,8 +30,8 @@ def main():
 
     while True:
         print("\nSelect a task to perform:")
-        print("1. Automation Tool ")
-        print("2. Domain ")
+        print("1. Automation Tool")
+        print("2. Domain")
         print("3. ")
         print("4. ")
         print("5. Exit\n")
@@ -39,12 +39,15 @@ def main():
         choice = input("Enter your choice [1-5]: ")
         if choice == "1":
             automation_submenu()  # Enter Automation Category submenu
+        elif choice == "2":
+            subdomain_submenu()  # Enter Domain submenu
         elif choice == "5":
             print("Exiting. Goodbye!")
             sys.exit(0)
         else:
             print("Invalid choice, please try again.")
         print()
+
 
 if __name__ == "__main__":
     main()
