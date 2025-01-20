@@ -1,6 +1,7 @@
 import sys
 from scan import automation_submenu
 from domain import subdomain_submenu
+from exploit import mysql_injection_tool
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
@@ -19,7 +20,7 @@ def display_banner():
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
     """)
     # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.0.4 {reset}"
+    version = f"{green}\t\t\tv0.0.5 {reset}"
     print(f"\n{version}\n")  # Version at the bottom left corner
 
 
@@ -32,7 +33,7 @@ def main():
         print("\nSelect a task to perform:")
         print("1. Automation Tool")
         print("2. Domain")
-        print("3. ")
+        print("3. Exploits")
         print("4. ")
         print("5. Exit\n")
 
@@ -41,6 +42,8 @@ def main():
             automation_submenu()  # Enter Automation Category submenu
         elif choice == "2":
             subdomain_submenu()  # Enter Domain submenu
+        elif choice == "3":
+            mysql_injection_tool()  # Enter Domain submenu
         elif choice == "5":
             print("Ex2iting. Goodbye!")
             sys.exit(0)
