@@ -42,7 +42,7 @@ def main():
         elif choice == "2":
             subdomain_submenu()  # Enter Domain submenu
         elif choice == "5":
-            print("Exiting. Goodbye!")
+            print("Ex2iting. Goodbye!")
             sys.exit(0)
         else:
             print("Invalid choice, please try again.")
