@@ -18,10 +18,10 @@ def display_banner():
 ██╔══██║██║░░╚██╗██╔══██║██║██║╚████║░░░╚══╝░
 ██║░░██║╚██████╔╝██║░░██║██║██║░╚███║░░░██╗░░
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
-    """)
+                   """)
     # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.0.8 by  c01d43am{reset}"
-    print("https://github.com/c01d43am")
+    version = f"{green}\t\t\tv0.0.8 by c01d43am{reset}"
+    print("\t\thttps://github.com/c01d43am")
     print(f"\n{version}\n")  # Version at the bottom left corner
 
 
