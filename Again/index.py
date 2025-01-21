@@ -20,11 +20,11 @@ def display_banner():
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
     """)
     # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.0.8 {reset}"
+    version = f"{green}\t\t\tv0.0.8 by  c01d43am{reset}"
     print(f"\n{version}\n")  # Version at the bottom left corner
 
 
-# Main script logic
+# Main script logics
 def main():
     display_banner()  # Display the banner
     print("Starting menu...")
