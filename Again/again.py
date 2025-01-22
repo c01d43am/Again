@@ -16,9 +16,9 @@ def update_github_repo():
     try:
         print("\nUpdating GitHub repository...")
         # Add changes to git, commit, and push to the remote repository
-        subprocess.run(["git", "add", "."])
-        subprocess.run(["git", "commit", "-m", "Update tool state"])
-        subprocess.run(["git", "push", "origin", "main"])
+        subprocess.run(["git", "add", "."], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
+        subprocess.run(["git", "commit", "-m", "Update tool state"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
+        subprocess.run(["git", "push", "origin", "main"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
         print("GitHub repository updated successfully.")
     except Exception as e:
         print(f"Error updating GitHub: {e}")
@@ -27,8 +27,8 @@ def update_github_repo():
 def check_for_updates():
     try:
         print("\nChecking for updates in the GitHub repository...")
-        # Pull the latest changes from the remote repository
-        subprocess.run(["git", "pull", "origin", "main"])
+        # Pull the latest changes from the remote repository, suppressing output
+        subprocess.run(["git", "pull", "origin", "main"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print("GitHub repository is up-to-date.")
     except Exception as e:
         print(f"Error checking for updates: {e}")
