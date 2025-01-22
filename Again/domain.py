@@ -1,7 +1,6 @@
 import os
 import subprocess
 
-
 def check_and_install_sublister():
     """Checks if Sublist3r is installed. Installs it if not found."""
     sublist3r_path = os.path.expanduser("~/Sublist3r/sublist3r.py")
@@ -20,7 +19,6 @@ def check_and_install_sublister():
             print(f"Failed to install Sublist3r: {e}")
             return False
 
-
 def check_and_install_nmap():
     """Checks if Nmap is installed. Installs it if not found."""
     try:
@@ -36,7 +34,6 @@ def check_and_install_nmap():
     except Exception as e:
         print(f"Failed to install Nmap: {e}")
         return False
-
 
 def check_and_install_sslscan():
     """Checks if sslscan is installed. Installs it if not found."""
@@ -54,6 +51,21 @@ def check_and_install_sslscan():
         print(f"Failed to install sslscan: {e}")
         return False
 
+def check_and_install_dirb():
+    """Checks if dirb is installed. Installs it if not found."""
+    try:
+        result = subprocess.run("which dirb", shell=True, capture_output=True)
+        if result.returncode == 0:
+            print("dirb is already installed.")
+            return True
+        else:
+            print("dirb is not installed. Installing now...")
+            os.system("sudo apt update && sudo apt install -y dirb")
+            print("dirb has been installed successfully.")
+            return True
+    except Exception as e:
+        print(f"Failed to install dirb: {e}")
+        return False
 
 def run_sublister(domain):
     """Runs Sublist3r to enumerate subdomains for the provided domain."""
@@ -70,13 +82,23 @@ def run_sublister(domain):
     except Exception as e:
         print(f"Failed to run Sublist3r: {e}")
 
+def run_dirb_scan(subdomain):
+    """Run dirb to check for common files and directories."""
+    output_file = f"dirb_results_{subdomain.replace('.', '_')}.txt"
+    print(f"\nRunning dirb scan for {subdomain}...")
+    try:
+        command = f"dirb http://{subdomain} -o {output_file}"
+        os.system(command)
+        print(f"dirb scan completed. Results saved to {output_file}.")
+    except Exception as e:
+        print(f"Failed to run dirb for {subdomain}: {e}")
 
 def check_http_status_code(subdomain):
     """Check the HTTP status code for a given subdomain using curl."""
     try:
         response = subprocess.run(f"curl -I -s {subdomain}", shell=True, capture_output=True)
         response_str = response.stdout.decode("utf-8")
-        
+
         # Extract status code from the response headers
         lines = response_str.splitlines()
         for line in lines:
@@ -89,7 +111,6 @@ def check_http_status_code(subdomain):
         print(f"Failed to check HTTP status for {subdomain}: {e}")
         return None
 
-
 def check_security_headers(subdomain):
     """Check for common HTTP security headers."""
     headers = ['Strict-Transport-Security', 'X-Content-Type-Options', 'X-Frame-Options', 'Content-Security-Policy']
@@ -97,15 +118,14 @@ def check_security_headers(subdomain):
         response = subprocess.run(f"curl -sI {subdomain}", shell=True, capture_output=True)
         headers_str = response.stdout.decode("utf-8")
         print(f"\nSecurity headers for {subdomain}:")
-        
+
         for header in headers:
             if header in headers_str:
-                print(f"  [✓] {header}: Present")
+                print(f"  [\u2713] {header}: Present")
             else:
-                print(f"  [✗] {header}: Missing")
+                print(f"  [\u2717] {header}: Missing")
     except subprocess.CalledProcessError as e:
         print(f"Failed to check security headers for {subdomain}: {e}")
-
 
 def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
@@ -119,7 +139,6 @@ def run_nmap_scan(subdomain, scan_type="full"):
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
 
-
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
     print(f"\nRunning SSL/TLS scan for {subdomain}...")
@@ -128,7 +147,6 @@ def run_sslscan(subdomain):
         print(f"SSL/TLS scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
-
 
 def run_vulnerability_scans():
     """Run a series of vulnerability scans on subdomains."""
@@ -156,34 +174,53 @@ def run_vulnerability_scans():
         # SSL/TLS Scan
         run_sslscan(subdomain)
 
+        # dirb Scan
+        run_dirb_scan(subdomain)
 
-def subdomain_submenu():
-    """Submenu to handle subdomain-related tasks."""
-    while True:
-        print("\nSubdomain Submenu:")
-        print("1. Enumerate Subdomains with Sublist3r")
-        print("2. Run Vulnerability Scans")
-        print("3. Return to Domain Menu\n")
+def subdomain_submenu():  
+    """Submenu to handle subdomain-related tasks."""  
+    while True:  
+        print("\nSubdomain Submenu:")  
+        print("1. Enumerate Subdomains with Sublist3r")  
+        print("2. Run Vulnerability Scans on Subdomains")  
+        print("3. Exit")  
 
-        choice = input("Enter your choice [1-3]: ")
-        if choice == "1":
-            print("Enumerate Subdomains with Sublist3r selected.")
-            domain = input("Enter the domain to enumerate subdomains for: ")
-            if domain:
-                if check_and_install_sublister():  # Check and install Sublist3r if not installed
-                    run_sublister(domain)  # Run Sublist3r for the given domain
-            else:
-                print("No domain entered. Please try again.")
-        elif choice == "2":
-            if check_and_install_nmap() and check_and_install_sslscan():  # Check and install Nmap and SSLScan if not installed
-                run_vulnerability_scans()  # Run vulnerability scans on subdomains
-        elif choice == "3":
-            print("Returning to Domain Menu.")
-            break
-        else:
-            print("Invalid choice, please try again.")
-        print()
+        choice = input("Please choose an option (1-3): ")  
 
+        if choice == "1":  
+            domain = input("Enter the domain to enumerate subdomains: ")  
+            run_sublister(domain)  
+        elif choice == "2":  
+            run_vulnerability_scans()  
+        elif choice == "3":  
+            print("Exiting the submenu...")  
+            break  
+        else:  
+            print("Invalid choice. Please select a valid option.")  
 
-if __name__ == "__main__":
-    subdomain_submenu()
+# Main menu to start the tool  
+def main_menu():  
+    """Main menu for the tool that checks and installs required tools."""  
+    print("Welcome to the Recon Tool!")  
+    check_and_install_sublister()  
+    check_and_install_nmap()  
+    check_and_install_sslscan()  
+    check_and_install_dirb()  
+    
+    while True:  
+        print("\nMain Menu:")  
+        print("1. Subdomain Tasks")  
+        print("2. Exit")  
+
+        choice = input("Please choose an option (1-2): ")  
+
+        if choice == "1":  
+            subdomain_submenu()  
+        elif choice == "2":  
+            print("Exiting the tool. Goodbye!")  
+            break  
+        else:  
+            print("Invalid choice. Please select a valid option.")  
+
+if __name__ == "__main__":  
+    main_menu()
