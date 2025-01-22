@@ -142,48 +142,30 @@ def subdomain_submenu():
     while True:
         print("\nSubdomain Submenu:")
         print("1. Enumerate Subdomains with Sublist3r")
-        print("2. Run Vulnerability Scans on Subdomains")
-        print("3. Exit")
-
-        choice = input("Please choose an option (1-3): ")
+        print("2. Run Dirb Scan")
+        print("3. Run Nmap Scan")
+        print("4. Run Nikto Scan")
+        print("5. Run SSLscan")
+        print("6. Exit")
+        choice = input("Please choose an option (1-6): ")
 
         if choice == "1":
             domain = input("Enter the domain to enumerate subdomains: ")
             run_sublister(domain)
         elif choice == "2":
-            subdomain_vuln_scan_submenu()
-        elif choice == "3":
-            print("Exiting the submenu...")
-            break
-        else:
-            print("Invalid choice. Please select a valid option.")
-
-def subdomain_vuln_scan_submenu():
-    """Submenu for running vulnerability scans on subdomains."""
-    while True:
-        print("\nVulnerability Scan Submenu:")
-        print("1. Run Dirb Scan")
-        print("2. Run Nmap Scan")
-        print("3. Run Nikto Scan")
-        print("4. Run SSLscan")
-        print("5. Exit")
-
-        choice = input("Please choose an option (1-5): ")
-
-        if choice == "1":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
             run_dirb_scan(subdomain)
-        elif choice == "2":
+        elif choice == "3":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
             scan_type = input("Enter scan type (fast/full): ")
             run_nmap_scan(subdomain, scan_type)
-        elif choice == "3":
+        elif choice == "4":
             subdomain = input("Enter the subdomain to scan with Nikto: ")
             run_nikto_scan(subdomain)
-        elif choice == "4":
+        elif choice == "5":
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
-        elif choice == "5":
+        elif choice == "6":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
