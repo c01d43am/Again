@@ -20,7 +20,6 @@ def exploitation_animation():
         "Gaining access...",
         "All systems compromised!"
     ]
-    
     for text in exploit_text:
         sys.stdout.write(f"\r{text}")
         sys.stdout.flush()
@@ -40,10 +39,10 @@ def check_for_updates():
 
 # Function to execute index.py after completing actions
 def run_index():
-    print("\\n")
+    print("\nExecuting index.py...\n")
     try:
-        # Run index.py after the main actions are completed
-        subprocess.run(["python3", "index.py"])
+        # Specify the path to index.py inside the again folder
+        subprocess.run(["python3", "Again/index.py"])
     except Exception as e:
         print(f"Error executing index.py: {e}")
 
