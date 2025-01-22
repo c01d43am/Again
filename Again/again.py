@@ -4,12 +4,12 @@ import subprocess
 
 # Function to display a loading animation
 def loading_animation():
-    animation = "|/-\\"
+    animation = "|/-!@#$%^&*()_+\\"
     for _ in range(10):  # You can adjust the range for a longer animation
         for char in animation:
-            sys.stdout.write(f"\rLoading {char}")
+            sys.stdout.write(f"\rLoading..........{char}")
             sys.stdout.flush()
-            time.sleep(0.1)
+            time.sleep(0.2)
 
 # Function to display an "exploitation" animation
 def exploitation_animation():
@@ -40,7 +40,7 @@ def check_for_updates():
 
 # Function to execute index.py after completing actions
 def run_index():
-    print("\nExecuting index.py...\n")
+    print("\\n")
     try:
         # Run index.py after the main actions are completed
         subprocess.run(["python3", "index.py"])
