@@ -5,11 +5,28 @@ import subprocess
 # Function to display a loading animation
 def loading_animation():
     animation = "|/-\\"
-    for _ in range(20):  # You can adjust the range for a longer animation
+    for _ in range(10):  # You can adjust the range for a longer animation
         for char in animation:
             sys.stdout.write(f"\rLoading {char}")
             sys.stdout.flush()
             time.sleep(0.1)
+
+# Function to display an "exploitation" animation
+def exploitation_animation():
+    exploit_text = [
+        "Exploiting target...",
+        "Bypassing defenses...",
+        "Executing payload...",
+        "Gaining access...",
+        "All systems compromised!"
+    ]
+    
+    for text in exploit_text:
+        sys.stdout.write(f"\r{text}")
+        sys.stdout.flush()
+        time.sleep(1)
+    
+    print("\nExploit successful!")
 
 # Function to check for updates from the GitHub repository (Pull the latest changes)
 def check_for_updates():
@@ -35,6 +52,7 @@ def start_tool():
     print("\nStarting Tool...\n")
     check_for_updates()  # Check for the latest updates from GitHub
     loading_animation()  # Show the loading animation
+    exploitation_animation()  # Add the exploitation animation
     run_index()  # After completing all actions, execute index.py
 
 if __name__ == "__main__":
