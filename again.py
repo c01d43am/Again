@@ -5,7 +5,7 @@ import subprocess
 # Function to display a loading animation
 def loading_animation():
     animation = "|/-!@#$%^&*()_+\\"
-    for _ in range(10):  # You can adjust the range for a longer animation
+    for _ in range(5):  # You can adjust the range for a longer animation
         for char in animation:
             sys.stdout.write(f"\rLoading..........{char}")
             sys.stdout.flush()
