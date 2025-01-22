@@ -39,12 +39,12 @@ def check_for_updates():
 
 # Function to execute index.py after completing actions
 def run_index():
-    print("\nExecuting index.py...\n")
+    print("\nExecuting ....\n")
     try:
         # Specify the path to index.py inside the again folder
         subprocess.run(["python3", "Again/index.py"])
     except Exception as e:
-        print(f"Error executing index.py: {e}")
+        print(f"Error !!!!!????: {e}")
 
 # Start the tool by checking for updates, then running the necessary functions
 def start_tool():
