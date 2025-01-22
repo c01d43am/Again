@@ -11,18 +11,6 @@ def loading_animation():
             sys.stdout.flush()
             time.sleep(0.1)
 
-# Function to update the GitHub repository (Push the changes)
-def update_github_repo():
-    try:
-        print("\nUpdating GitHub repository...")
-        # Add changes to git, commit, and push to the remote repository
-        subprocess.run(["git", "add", "."], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
-        subprocess.run(["git", "commit", "-m", "Update tool state"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
-        subprocess.run(["git", "push", "origin", "main"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)  # Suppress output
-        print("GitHub repository updated successfully.")
-    except Exception as e:
-        print(f"Error updating GitHub: {e}")
-
 # Function to check for updates from the GitHub repository (Pull the latest changes)
 def check_for_updates():
     try:
@@ -47,7 +35,6 @@ def start_tool():
     print("\nStarting Tool...\n")
     check_for_updates()  # Check for the latest updates from GitHub
     loading_animation()  # Show the loading animation
-    update_github_repo()  # Optionally push any local changes
     run_index()  # After completing all actions, execute index.py
 
 if __name__ == "__main__":
