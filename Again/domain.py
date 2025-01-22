@@ -67,6 +67,22 @@ def check_and_install_dirb():
         print(f"Failed to install dirb: {e}")
         return False
 
+def check_and_install_nikto():
+    """Checks if Nikto is installed. Installs it if not found."""
+    try:
+        result = subprocess.run("which nikto", shell=True, capture_output=True)
+        if result.returncode == 0:
+            print("Nikto is already installed.")
+            return True
+        else:
+            print("Nikto is not installed. Installing now...")
+            os.system("sudo apt update && sudo apt install -y nikto")
+            print("Nikto has been installed successfully.")
+            return True
+    except Exception as e:
+        print(f"Failed to install Nikto: {e}")
+        return False
+
 def run_sublister(domain):
     """Runs Sublist3r to enumerate subdomains for the provided domain."""
     sublist3r_path = os.path.expanduser("~/Sublist3r/sublist3r.py")
@@ -82,51 +98,6 @@ def run_sublister(domain):
     except Exception as e:
         print(f"Failed to run Sublist3r: {e}")
 
-def run_dirb_scan(subdomain):
-    """Run dirb to check for common files and directories."""
-    output_file = f"dirb_results_{subdomain.replace('.', '_')}.txt"
-    print(f"\nRunning dirb scan for {subdomain}...")
-    try:
-        command = f"dirb http://{subdomain} -o {output_file}"
-        os.system(command)
-        print(f"dirb scan completed. Results saved to {output_file}.")
-    except Exception as e:
-        print(f"Failed to run dirb for {subdomain}: {e}")
-
-def check_http_status_code(subdomain):
-    """Check the HTTP status code for a given subdomain using curl."""
-    try:
-        response = subprocess.run(f"curl -I -s {subdomain}", shell=True, capture_output=True)
-        response_str = response.stdout.decode("utf-8")
-
-        # Extract status code from the response headers
-        lines = response_str.splitlines()
-        for line in lines:
-            if line.startswith("HTTP"):
-                status_code = line.split()[1]
-                print(f"HTTP Status Code for {subdomain}: {status_code}")
-                return status_code
-        return None
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to check HTTP status for {subdomain}: {e}")
-        return None
-
-def check_security_headers(subdomain):
-    """Check for common HTTP security headers."""
-    headers = ['Strict-Transport-Security', 'X-Content-Type-Options', 'X-Frame-Options', 'Content-Security-Policy']
-    try:
-        response = subprocess.run(f"curl -sI {subdomain}", shell=True, capture_output=True)
-        headers_str = response.stdout.decode("utf-8")
-        print(f"\nSecurity headers for {subdomain}:")
-
-        for header in headers:
-            if header in headers_str:
-                print(f"  [\u2713] {header}: Present")
-            else:
-                print(f"  [\u2717] {header}: Missing")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to check security headers for {subdomain}: {e}")
-
 def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
@@ -139,6 +110,15 @@ def run_nmap_scan(subdomain, scan_type="full"):
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
 
+def run_nikto_scan(subdomain):
+    """Run Nikto scan for vulnerabilities."""
+    print(f"\nRunning Nikto scan for {subdomain}...")
+    try:
+        subprocess.run(f"nikto -h {subdomain}", shell=True, check=True)
+        print(f"Nikto scan completed for {subdomain}.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to run Nikto scan for {subdomain}: {e}")
+
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
     print(f"\nRunning SSL/TLS scan for {subdomain}...")
@@ -148,79 +128,77 @@ def run_sslscan(subdomain):
     except subprocess.CalledProcessError as e:
         print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
 
-def run_vulnerability_scans():
-    """Run a series of vulnerability scans on subdomains."""
-    if not os.path.exists("subdomains.txt"):
-        print("No subdomains file found. Please run Sublist3r first.")
-        return
+def subdomain_submenu():
+    """Submenu to handle subdomain-related tasks."""
+    while True:
+        print("\nSubdomain Submenu:")
+        print("1. Enumerate Subdomains with Sublist3r")
+        print("2. Run Vulnerability Scans on Subdomains")
+        print("3. Exit")
 
-    # Run the scans on each subdomain
-    with open("subdomains.txt", "r") as file:
-        subdomains = file.readlines()
+        choice = input("Please choose an option (1-3): ")
 
-    for subdomain in subdomains:
-        subdomain = subdomain.strip()
-        print(f"\nScanning {subdomain}...")
+        if choice == "1":
+            domain = input("Enter the domain to enumerate subdomains: ")
+            run_sublister(domain)
+        elif choice == "2":
+            subdomain_vuln_scan_submenu()
+        elif choice == "3":
+            print("Exiting the submenu...")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
 
-        # HTTP Status Code
-        check_http_status_code(subdomain)
+def subdomain_vuln_scan_submenu():
+    """Submenu for running vulnerability scans on subdomains."""
+    while True:
+        print("\nVulnerability Scan Submenu:")
+        print("1. Run Nmap Scan")
+        print("2. Run Nikto Scan")
+        print("3. Run SSLscan")
+        print("4. Exit")
 
-        # Check Security Headers
-        check_security_headers(subdomain)
+        choice = input("Please choose an option (1-4): ")
 
-        # Nmap Fast Scan for open ports
-        run_nmap_scan(subdomain, scan_type="fast")
+        if choice == "1":
+            subdomain = input("Enter the subdomain to scan with Nmap: ")
+            scan_type = input("Enter scan type (fast/full): ")
+            run_nmap_scan(subdomain, scan_type)
+        elif choice == "2":
+            subdomain = input("Enter the subdomain to scan with Nikto: ")
+            run_nikto_scan(subdomain)
+        elif choice == "3":
+            subdomain = input("Enter the subdomain to scan with SSLscan: ")
+            run_sslscan(subdomain)
+        elif choice == "4":
+            print("Exiting the vulnerability scan submenu...")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
 
-        # SSL/TLS Scan
-        run_sslscan(subdomain)
+def main_menu():
+    """Main menu for the tool that checks and installs required tools."""
+    print("Welcome to the Recon Tool!")
+    check_and_install_sublister()
+    check_and_install_nmap()
+    check_and_install_sslscan()
+    check_and_install_dirb()
+    check_and_install_nikto()
 
-        # dirb Scan
-        run_dirb_scan(subdomain)
+    while True:
+        print("\nMain Menu:")
+        print("1. Subdomain Tasks")
+        print("2. Exit")
 
-def subdomain_submenu():  
-    """Submenu to handle subdomain-related tasks."""  
-    while True:  
-        print("\nSubdomain Submenu:")  
-        print("1. Enumerate Subdomains with Sublist3r")  
-        print("2. Run Vulnerability Scans on Subdomains")  
-        print("3. Exit")  
+        choice = input("Please choose an option (1-2): ")
 
-        choice = input("Please choose an option (1-3): ")  
+        if choice == "1":
+            subdomain_submenu()
+        elif choice == "2":
+            print("Exiting the tool. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
 
-        if choice == "1":  
-            domain = input("Enter the domain to enumerate subdomains: ")  
-            run_sublister(domain)  
-        elif choice == "2":  
-            run_vulnerability_scans()  
-        elif choice == "3":  
-            print("Exiting the submenu...")  
-            break  
-        else:  
-            print("Invalid choice. Please select a valid option.")  
-
-# Main menu to start the tool  
-def main_menu():  
-    """Main menu for the tool that checks and installs required tools."""  
-    print("Welcome to the Recon Tool!")  
-    check_and_install_sublister()  
-    check_and_install_nmap()  
-    check_and_install_sslscan()  
-    check_and_install_dirb()  
-    
-    while True:  
-        print("\nMain Menu:")  
-        print("1. Subdomain Tasks")  
-        print("2. Exit")  
-
-        choice = input("Please choose an option (1-2): ")  
-
-        if choice == "1":  
-            subdomain_submenu()  
-        elif choice == "2":  
-            print("Exiting the tool. Goodbye!")  
-            break  
-        else:  
-            print("Invalid choice. Please select a valid option.")  
-
-if __name__ == "__main__":  
+if __name__ == "__main__":
     main_menu()
