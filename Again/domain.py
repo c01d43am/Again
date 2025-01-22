@@ -128,6 +128,15 @@ def run_sslscan(subdomain):
     except subprocess.CalledProcessError as e:
         print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
 
+def run_dirb_scan(subdomain):
+    """Run Dirb scan to check for directories and files."""
+    print(f"\nRunning Dirb scan for {subdomain}...")
+    try:
+        subprocess.run(f"dirb http://{subdomain}", shell=True, check=True)
+        print(f"Dirb scan completed for {subdomain}.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to run Dirb scan for {subdomain}: {e}")
+
 def subdomain_submenu():
     """Submenu to handle subdomain-related tasks."""
     while True:
@@ -153,24 +162,28 @@ def subdomain_vuln_scan_submenu():
     """Submenu for running vulnerability scans on subdomains."""
     while True:
         print("\nVulnerability Scan Submenu:")
-        print("1. Run Nmap Scan")
-        print("2. Run Nikto Scan")
-        print("3. Run SSLscan")
-        print("4. Exit")
+        print("1. Run Dirb Scan")
+        print("2. Run Nmap Scan")
+        print("3. Run Nikto Scan")
+        print("4. Run SSLscan")
+        print("5. Exit")
 
-        choice = input("Please choose an option (1-4): ")
+        choice = input("Please choose an option (1-5): ")
 
         if choice == "1":
+            subdomain = input("Enter the subdomain to scan with Dirb: ")
+            run_dirb_scan(subdomain)
+        elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
             scan_type = input("Enter scan type (fast/full): ")
             run_nmap_scan(subdomain, scan_type)
-        elif choice == "2":
+        elif choice == "3":
             subdomain = input("Enter the subdomain to scan with Nikto: ")
             run_nikto_scan(subdomain)
-        elif choice == "3":
+        elif choice == "4":
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
-        elif choice == "4":
+        elif choice == "5":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
