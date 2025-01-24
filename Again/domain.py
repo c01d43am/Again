@@ -103,9 +103,9 @@ def run_nmap_scan(subdomain, scan_type="full"):
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
     try:
         if scan_type == "fast":
-            subprocess.run(f"nmap -T4 -F {subdomain}", shell=True, check=True)  # Fast scan
+            subprocess.run(f"nmap -Pn -T4 -F {subdomain}", shell=True, check=True)  # Fast scan
         else:
-            subprocess.run(f"nmap {subdomain}", shell=True, check=True)  # Full scan
+            subprocess.run(f"nmap -Pn {subdomain}", shell=True, check=True)  # Full scan
         print(f"Nmap scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
