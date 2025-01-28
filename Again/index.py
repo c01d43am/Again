@@ -35,8 +35,7 @@ def main():
         print("1. Automation Tool")
         print("2. Domain")
         print("3. Exploits")
-        print("4. ")
-        print("5. Exit\n")
+        print("4. Exit\n")
 
         choice = input("Enter your choice [1-5]: ")
         if choice == "1":
@@ -45,7 +44,7 @@ def main():
             subdomain_submenu()  # Enter Domain submenu
         elif choice == "3":
             exploit_tool_menu()  # Enter Domain submenu
-        elif choice == "5":
+        elif choice == "4":
             print("Ex2iting. Goodbye!")
             sys.exit(0)
         else:

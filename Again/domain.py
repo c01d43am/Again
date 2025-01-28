@@ -121,31 +121,27 @@ def subdomain_submenu():
     """Submenu to handle subdomain-related tasks."""
     while True:
         print("\nSubdomain Submenu:")
-        print("1. Error")
-        print("2. Run Dirb Scan")
-        print("3. Run Nmap Scan")
-        print("4. Run Nikto Scan")
-        print("5. Run SSLscan")
-        print("6. Exit")
-        choice = input("Please choose an option (1-6): ")
-
+        print("1. Run Dirb Scan")
+        print("2. Run Nmap Scan")
+        print("3. Run Nikto Scan")
+        print("4. Run SSLscan")
+        print("5. Exit")
+        choice = input("Please choose an option (1-5): ")
+        
         if choice == "1":
-            domain = input("Error: ")
-            #run_sublister(domain)
-        elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
             run_dirb_scan(subdomain)
-        elif choice == "3":
+        elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
             scan_type = input("Enter scan type (fast/full): ")
             run_nmap_scan(subdomain, scan_type)
-        elif choice == "4":
+        elif choice == "3":
             subdomain = input("Enter the subdomain to scan with Nikto: ")
             run_nikto_scan(subdomain)
-        elif choice == "5":
+        elif choice == "4":
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
-        elif choice == "6":
+        elif choice == "5":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
