@@ -85,7 +85,7 @@ The script also includes an **auto-update feature**, pulling the latest changes 
 
 https://github.com/c01d43am
 
-v0.0.8 by c01d43am
+v0.0.0 by c01d43am
 ```
 
 ## Contributing
