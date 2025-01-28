@@ -103,6 +103,3 @@ This project is licensed under the **GNU General Public License v2.0**. See the 
 
 This tool is intended for educational purposes and ethical hacking only. The author is not responsible for any misuse.
 
----
-
-Feel free to modify the content to align with the specific purpose of your tool. Let me know if you need any additional sections! 🚀
