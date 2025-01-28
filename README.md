@@ -1,6 +1,5 @@
 # Again Tool
 
-**Version:** v0.0.7  
 **Author:** [c01d43am](https://github.com/c01d43am)  
 
 ## Overview
