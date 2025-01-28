@@ -1,24 +1,5 @@
 import os
 import subprocess
-
-def check_and_install_sublister():
-    """Checks if Sublist3r is installed. Installs it if not found."""
-    sublist3r_path = os.path.expanduser("~/Sublist3r/sublist3r.py")
-    if os.path.exists(sublist3r_path):
-        print("Sublist3r is already installed.")
-        return True
-    else:
-        print("Sublist3r is not installed. Installing now...")
-        try:
-            os.system("git clone https://github.com/aboul3la/Sublist3r.git %USERPROFILE%\\Sublist3r")
-            os.system("python -m pip install --upgrade pip")
-            os.system("pip install -r %USERPROFILE%\\Sublist3r\\requirements.txt")
-            print("Sublist3r has been installed successfully.")
-            return True
-        except Exception as e:
-            print(f"Failed to install Sublist3r: {e}")
-            return False
-
 def check_and_install_nmap():
     """Checks if Nmap is installed. Installs it if not found."""
     try:
@@ -97,22 +78,6 @@ def check_and_install_nikto():
     except Exception as e:
         print(f"Failed to install Nikto: {e}")
         return False
-
-def run_sublister(domain):
-    """Runs Sublist3r to enumerate subdomains for the provided domain."""
-    sublist3r_path = os.path.expanduser("~/Sublist3r/sublist3r.py")
-    if not os.path.exists(sublist3r_path):
-        print("Sublist3r is not installed. Please install it first.")
-        return
-
-    print(f"Running Sublist3r for domain: {domain}")
-    command = f"python3 {sublist3r_path} -d {domain} -o subdomains.txt"
-    try:
-        os.system(command)
-        print(f"Sublist3r has completed enumeration. Results are saved in 'subdomains.txt'.")
-    except Exception as e:
-        print(f"Failed to run Sublist3r: {e}")
-
 def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
@@ -156,7 +121,7 @@ def subdomain_submenu():
     """Submenu to handle subdomain-related tasks."""
     while True:
         print("\nSubdomain Submenu:")
-        print("1. Enumerate Subdomains with Sublist3r")
+        print("1. Error")
         print("2. Run Dirb Scan")
         print("3. Run Nmap Scan")
         print("4. Run Nikto Scan")
@@ -165,8 +130,8 @@ def subdomain_submenu():
         choice = input("Please choose an option (1-6): ")
 
         if choice == "1":
-            domain = input("Enter the domain to enumerate subdomains: ")
-            run_sublister(domain)
+            domain = input("Error: ")
+            #run_sublister(domain)
         elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
             run_dirb_scan(subdomain)
@@ -189,7 +154,6 @@ def subdomain_submenu():
 def main_menu():
     """Main menu for the tool that checks and installs required tools."""
     print("Welcome to the Recon Tool!")
-    check_and_install_sublister()
     check_and_install_nmap()
     check_and_install_sslscan()
     check_and_install_dirb()
