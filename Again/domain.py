@@ -10,15 +10,30 @@ def check_and_install_sublister():
     else:
         print("Sublist3r is not installed. Installing now...")
         try:
-            os.system("git clone https://github.com/aboul3la/Sublist3r.git ~/Sublist3r")
-            os.system("sudo apt update && sudo apt install -y python3-pip")
-            os.system("pip3 install -r ~/Sublist3r/requirements.txt")
+            os.system("git clone https://github.com/aboul3la/Sublist3r.git %USERPROFILE%\\Sublist3r")
+            os.system("python -m pip install --upgrade pip")
+            os.system("pip install -r %USERPROFILE%\\Sublist3r\\requirements.txt")
             print("Sublist3r has been installed successfully.")
             return True
         except Exception as e:
             print(f"Failed to install Sublist3r: {e}")
             return False
 
+def check_and_install_nmap():
+    """Checks if Nmap is installed. Installs it if not found."""
+    try:
+        result = subprocess.run("where nmap", shell=True, capture_output=True)
+        if result.returncode == 0:
+            print("Nmap is already installed.")
+            return True
+        else:
+            print("Nmap is not installed. Installing now...")
+            os.system("choco install nmap -y")
+            print("Nmap has been installed successfully.")
+            return True
+    except Exception as e:
+        print(f"Failed to install Nmap: {e}")
+        return False
 def check_and_install_nmap():
     """Checks if Nmap is installed. Installs it if not found."""
     try:
