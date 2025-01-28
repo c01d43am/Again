@@ -1,4 +1,4 @@
-from Again.scan import start_openvas, start_nessus, start_armitage, run_nikto_scan, install_tool
+from Again.scan import start_openvas, start_nessus, start_armitage, install_tool
 
 # Function to automate the selected tool
 def automate_tool(tool_choice):

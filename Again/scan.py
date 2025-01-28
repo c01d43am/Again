@@ -65,21 +65,6 @@ def start_armitage():
         print("Armitage started. Please wait for the GUI to appear.")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
-
-# Function to run a Nikto scan
-def run_nikto_scan():
-    install_tool("nikto", "nikto")
-    target = input("Enter the target URL or IP: ").strip()
-    if not target:
-        print("Invalid target. Please enter a valid URL or IP address.")
-        return
-    print(f"Running Nikto scan on {target}...")
-    try:
-        subprocess.run(["nikto", "-h", target], check=True)
-        print("Nikto scan completed.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error during Nikto scan: {e}")
-
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
@@ -88,8 +73,6 @@ def automate_tool(tool_choice):
         automate_nessus()
     elif tool_choice == "3":
         automate_armitage()
-    elif tool_choice == "4":
-        automate_nikto_scan()
     else:
         print("Invalid choice, please try again.")
 
@@ -114,12 +97,6 @@ def automate_armitage():
     start_armitage()  # Start Armitage
     print("Armitage has been started. Please wait for the GUI to appear.\n")
 
-# Nikto Scan Automation with subcategories
-def automate_nikto_scan():
-    print("\nAutomating Nikto Scan...\n")
-    install_tool("nikto", "nikto")  # Ensure Nikto is installed
-    run_nikto_scan()  # Run Nikto scan
-    print("Nikto scan completed.\n")
 
 # Submenu for Automation Category
 def automation_submenu():
@@ -128,7 +105,7 @@ def automation_submenu():
         print("1. Automate OpenVAS")
         print("2. Automate Nessus")
         print("3. Automate Armitage")
-        print("4. Automate Nikto scan")
+        print("4. ")
         print("5. Back to main menu")
         
         tool_choice = input("Enter your choice [1-5]: ")
