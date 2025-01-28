@@ -14,10 +14,10 @@ def loading_animation():
 # Function to display an "exploitation" animation
 def exploitation_animation():
     exploit_text = [
-        "Exploiting target...",
-        "Bypassing defenses...",
-        "Executing payload...",
-        "Gaining access...",
+        "yummy...",
+        "taty...",
+        "i want more...",
+        "am full...",
         "All systems compromised!"
     ]
     for text in exploit_text:
