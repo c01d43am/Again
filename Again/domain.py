@@ -110,7 +110,6 @@ def run_sslscan(subdomain):
 
 def run_dirb_scan(subdomain):
     """Run Dirb scan to check for directories and files."""
-    print(f"\nRunning Dirb scan for {subdomain}...")
     try:
         subprocess.run(f"dirb http://{subdomain}", shell=True, check=True)
         print(f"Dirb scan completed for {subdomain}.")
