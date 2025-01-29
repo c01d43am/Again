@@ -27,32 +27,32 @@ def exploitation_animation():
     
     print("\nExploit successful!")
 
-# Function to check for updates from the GitHub repository (Pull the latest changes)
+# Function to check for updates from the GitHub repository using ProxyChains
 def check_for_updates():
     try:
-        print("\nChecking for updates in the GitHub repository...")
-        # Pull the latest changes from the remote repository, suppressing output
-        subprocess.run(["git", "pull", "origin", "main"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("\nChecking for updates in the GitHub repository via ProxyChains...")
+        # Run git pull using proxychains
+        subprocess.run(["proxychains", "git", "pull", "origin", "main"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print("GitHub repository is up-to-date.")
     except Exception as e:
         print(f"Error checking for updates: {e}")
 
-# Function to execute index.py after completing actions
+# Function to execute index.py after completing actions using ProxyChains
 def run_index():
-    print("\nExecuting ....\n")
+    print("\nExecuting index.py through ProxyChains...\n")
     try:
-        # Specify the path to index.py inside the again folder
-        subprocess.run(["python3", "Again/index.py"])
+        # Run index.py with proxychains
+        subprocess.run(["proxychains", "python3", "Again/index.py"])
     except Exception as e:
         print(f"Error !!!!!????: {e}")
 
 # Start the tool by checking for updates, then running the necessary functions
 def start_tool():
     print("\nStarting Tool...\n")
-    check_for_updates()  # Check for the latest updates from GitHub
+    check_for_updates()  # Check for the latest updates from GitHub via ProxyChains
     loading_animation()  # Show the loading animation
     exploitation_animation()  # Add the exploitation animation
-    run_index()  # After completing all actions, execute index.py
+    run_index()  # After completing all actions, execute index.py through ProxyChains
 
 if __name__ == "__main__":
     start_tool()
