@@ -78,80 +78,17 @@ def check_and_install_nikto():
     except Exception as e:
         print(f"Failed to install Nikto: {e}")
         return False
-import subprocess
-
-def run_nmap_scan(subdomain, scan_type="full", additional_flags=""):
-    """Run an Nmap scan on the subdomain to check for open ports and vulnerabilities."""
+def run_nmap_scan(subdomain, scan_type="full"):
+    """Run an Nmap scan on the subdomain to check for open ports."""
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
-
-    # Define base Nmap command
-    nmap_command = f"nmap -Pn {additional_flags} {subdomain}"
-
-    # Choose scan type
     try:
         if scan_type == "fast":
-            # Fast scan: Check for common ports
-            nmap_command = f"nmap -Pn -T4 -F {subdomain}"
-        elif scan_type == "vuln":
-            # Vulnerability scan using NSE scripts
-            nmap_command = f"nmap -Pn --script vuln {subdomain}"
-        elif scan_type == "os-fingerprint":
-            # OS fingerprinting
-            nmap_command = f"nmap -Pn -O {subdomain}"
-        elif scan_type == "service-version":
-            # Service version detection
-            nmap_command = f"nmap -Pn -sV {subdomain}"
-        elif scan_type == "full":
-            # Full scan: Detailed scan with version detection and script scanning
-            nmap_command = f"nmap -Pn -A {subdomain}"
-
-        print(f"Running command: {nmap_command}")
-        # Run the scan with the selected options
-        subprocess.run(nmap_command, shell=True, check=True)
+            subprocess.run(f"nmap -Pn -T4 -F {subdomain}", shell=True, check=True)  # Fast scan
+        else:
+            subprocess.run(f"nmap -Pn {subdomain}", shell=True, check=True)  # Full scan
         print(f"Nmap scan completed for {subdomain}.")
-    
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
-
-def run_vuln_scanning(subdomain):
-    """Run additional vulnerability scanning scripts using Nmap and other tools."""
-    print(f"\nRunning vulnerability scans on {subdomain}...")
-
-    # Run Nmap with vulnerability scripts
-    try:
-        print("\nRunning Nmap vulnerability scan...")
-        subprocess.run(f"nmap -Pn --script vuln {subdomain}", shell=True, check=True)
-        print("Nmap vulnerability scan completed.")
-        
-        # Use Nikto for web vulnerability scanning
-        print("\nRunning Nikto web vulnerability scan...")
-        subprocess.run(f"nikto -h {subdomain}", shell=True, check=True)
-        print("Nikto scan completed.")
-        
-        # Use OpenVAS for vulnerability scanning (ensure OpenVAS is installed and configured)
-        print("\nRunning OpenVAS scan...")
-        subprocess.run("sudo gvm-start", shell=True, check=True)  # Start OpenVAS if needed
-        subprocess.run(f"gvm-cli -c /var/lib/openvas/openvas.conf start {subdomain}", shell=True, check=True)
-        print("OpenVAS scan completed.")
-
-    except subprocess.CalledProcessError as e:
-        print(f"Error during vulnerability scanning: {e}")
-
-def run_full_scan_with_vulns(subdomain):
-    """Runs a full Nmap scan with vulnerability detection and more checks."""
-    print(f"\nRunning full scan with vulnerabilities on {subdomain}...")
-    try:
-        # Run Nmap full scan with OS detection, version detection, and vulnerability scripts
-        subprocess.run(f"nmap -Pn -A --script vuln {subdomain}", shell=True, check=True)
-        print(f"Full Nmap scan with vulnerability detection completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error running full scan with vulnerabilities: {e}")
-
-if __name__ == "__main__":
-    subdomain = "example.com"  # Replace with your target subdomain or URL
-    run_nmap_scan(subdomain, scan_type="full")  # Run a full Nmap scan
-    run_vuln_scanning(subdomain)  # Run vulnerability scanning
-    run_full_scan_with_vulns(subdomain)  # Run full scan with vulnerability detection
 
 def run_nikto_scan(subdomain):
     """Run Nikto scan for vulnerabilities."""
