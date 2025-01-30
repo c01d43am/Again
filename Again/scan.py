@@ -132,10 +132,11 @@ def automation_submenu():
         print("1. OpenVAS")
         print("2. Nessus")
         print("3. Armitage")
-        print("4. Back to main menu")
+        print("4. Akto")
+        print("5. Back to main menu")
         
-        tool_choice = input("Enter your choice [1-4]: ")
-        if tool_choice == "4":
+        tool_choice = input("Enter your choice [1-5]: ")
+        if tool_choice == "5":
             break
         else:
             automate_tool(tool_choice)  # Automate the selected tool
