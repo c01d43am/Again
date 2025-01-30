@@ -8,6 +8,8 @@ def automate_tool(tool_choice):
         start_nessus()
     elif tool_choice == "3":
         start_armitage()
+    elif tool_choice == "4":
+        start_akto()
     else:
         print("Invalid choice, please try again.")
 

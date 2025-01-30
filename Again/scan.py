@@ -95,30 +95,30 @@ def start_armitage():
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
-        automate_openvas()
+        start_openvas()
     elif tool_choice == "2":
-        automate_nessus()
+        start_nessus()
     elif tool_choice == "3":
-        automate_armitage()
+        start_armitage()
     else:
         print("Invalid choice, please try again.")
 
 # OpenVAS Automation with subcategories
-def automate_openvas():
+def start_openvas():
     print("\nAutomating OpenVAS...\n")
     install_tool("gvm-start", "gvm")  # Ensure OpenVAS is installed
     start_openvas()  # Start OpenVAS
     print("OpenVAS has been started and is accessible via https://127.0.0.1:9392\n")
 
 # Nessus Automation with subcategories
-def automate_nessus():
+def start_nessus():
     print("\nAutomating Nessus...\n")
     install_tool("nessusd", "nessus")  # Ensure Nessus is installed
     start_nessus()  # Start Nessus
     print("Nessus has been started and is accessible via https://127.0.0.1:8834\n")
 
 # Armitage Automation with subcategories
-def automate_armitage():
+def start_armitage():
     print("\nAutomating Armitage...\n")
     install_tool("armitage", "armitage")  # Ensure Armitage is installed
     start_armitage()  # Start Armitage
