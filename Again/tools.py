@@ -1,5 +1,10 @@
 from Again.scan import start_openvas, start_nessus, start_armitage, install_tool
 
+# Define the start_akto function
+def start_akto():
+    print("Starting Akto...")
+    # Add the necessary code to start Akto
+
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
