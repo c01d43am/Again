@@ -129,9 +129,9 @@ def automate_armitage():
 def automation_submenu():
     while True:
         print("\nAutomation Options:")
-        print("1. Automate OpenVAS")
-        print("2. Automate Nessus")
-        print("3. Automate Armitage")
+        print("1. OpenVAS")
+        print("2. Nessus")
+        print("3. Armitage")
         print("4. Back to main menu")
         
         tool_choice = input("Enter your choice [1-4]: ")
