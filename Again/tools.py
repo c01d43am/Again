@@ -32,16 +32,26 @@ def automate_armitage():
     start_armitage()  # Start Armitage
     print("Armitage has been started. Please wait for the GUI to appear.\n")
 
+# Akto Automation with subcategories
+def automate_akto():
+    print("\nAutomating Akto...\n")
+    install_tool("akto", "akto")  # Ensure Akto is installed
+    # Start Akto or its associated services (e.g., Puppeteer, Dashboard)
+    start_akto()  # Implement the start_akto function to start Akto (you may need to define it)
+    print("Akto has been started. Please access it via http://127.0.0.1:9090\n")
+
+
 # Submenu for Automation Category
 def automation_submenu():
     while True:
         print("\nAutomation Options:")
-        print("1. Automate OpenVAS")
-        print("2. Automate Nessus")
-        print("3. Automate Armitage")
-        print("4. Back to main menu")
+        print("1. OpenVAS")
+        print("2. Nessus")
+        print("3. Armitage")
+        print("4. Akto")
+        print("5. Back to main menu")
         
-        tool_choice = input("Enter your choice [1-4]: ")
+        tool_choice = input("Enter your choice [1-5]: ")
         if tool_choice == "4":
             break
         else:

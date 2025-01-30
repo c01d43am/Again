@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 # General function to check and install a tool
 def install_tool(tool_name, package_name=None, post_install_cmd=None):
@@ -55,6 +56,32 @@ def start_nessus():
             print("Nessus service is already running. Access it via https://127.0.0.1:8834")
     except subprocess.CalledProcessError as e:
         print(f"Error while installing or starting Nessus: {e}")
+# Akto Automation with subcategories
+def start_akto():
+    print(f"Checking if {start_akto} is installed...\n")
+    
+    if start_akto == "akto":
+        # Check for Akto installation and install it if not present
+        akto_path = os.path.expanduser("~/akto")  # Ensure ~ is expanded correctly
+        
+        if not os.path.isdir(akto_path):
+            print(f"Akto not found. Installing...\n")
+            try:
+                # Clone Akto repository
+                os.system(f"git clone https://github.com/akto-api-security/akto.git {akto_path}")
+                
+                # Change to the Akto directory and start Akto
+                os.chdir(akto_path)
+                os.system("docker-compose up -d")  # Install and start Akto via Docker Compose
+                print(f"Akto has been installed and started.\n")
+            except Exception as e:
+                print(f"Error during Akto installation or startup: {e}")
+        else:
+            print(f"Akto is already installed.\n")
+        
+    else:
+        print(f"Installation check for {start_akto}...\n")
+        
 
 # Function to start Armitage
 def start_armitage():
