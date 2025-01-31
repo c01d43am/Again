@@ -53,19 +53,3 @@ def start_akto():
     else:
         print("Akto is already installed.\n")
     print("Akto has been started. Please access it via http://127.0.0.1:9090\n")
-
-# Submenu for Automation Category
-def automation_submenu():
-    while True:
-        print("\nAutomation Options:")
-        print("1. Nessus")
-        print("2. Armitage")
-        print("3. Akto123")
-        print("4. Back to main menu")
-        
-        tool_choice = input("Enter your choice [1-4]: ")
-        if tool_choice == "4":
-            break
-        else:
-            automate_tool(tool_choice)  # Automate the selected tool
-            print()  # New line for clarity
