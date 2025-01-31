@@ -16,7 +16,7 @@
 ## Modules
 
 1. **Automation Tool**  
-   Automates vulnerability scanning with tools like OpenVAS, Nessus, Armitage, and Nikto.
+   Automates vulnerability scanning with tools like Nessus, Armitage, and Nikto.
 
 2. **Domain**  
    Performs subdomain enumeration and related tasks.
@@ -30,7 +30,7 @@ Before running this tool, ensure the following are installed:
 
 - **Python 3.8+**
 - `git` for fetching updates.
-- Supported third-party tools (e.g., OpenVAS, Nessus, Nikto).
+- Supported third-party tools (e.g. Nessus, Nikto).
 
 ## Installation
 
@@ -66,7 +66,7 @@ Before running this tool, ensure the following are installed:
 ## How It Works
 
 `Again` provides a modular structure:
-- The **Automation** module installs and starts tools like Nessus, OpenVAS, etc.
+- The **Automation** module installs and starts tools like Nessus, etc.
 - The **Domain** module focuses on subdomain enumeration.
 - The **Exploits** module integrates various exploit scripts.
 
