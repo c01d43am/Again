@@ -40,6 +40,13 @@ def start_nessus():
         else:
             print("Nessus service is already running. Access it via https://127.0.0.1:8834")
 
+        # Check Nessus server status
+        server_status = subprocess.run(["curl", "-k", "https://127.0.0.1:8834/server/status"], capture_output=True, text=True)
+        if server_status.returncode == 0:
+            print("Nessus server status:", server_status.stdout)
+        else:
+            print("Failed to get Nessus server status.")
+
         # Update Nessus
         print("Updating Nessus...")
         subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "update"], check=True)
