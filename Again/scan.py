@@ -21,17 +21,6 @@ def install_tool(tool_name, package_name=None, post_install_cmd=None):
     except subprocess.CalledProcessError as e:
         print(f"Error while installing {tool_name}: {e}")
 
-# Function to start OpenVAS
-def start_openvas():
-    print("\nAutomating OpenVAS...\n")
-    install_tool("gvm-start", "gvm")  # Ensure OpenVAS is installed
-    print("Starting OpenVAS...")
-    try:
-        subprocess.run(["sudo", "gvm-start"], check=True)
-        print("OpenVAS started. Access it via https://127.0.0.1:9392")
-    except subprocess.CalledProcessError as e:
-        print(f"Error starting OpenVAS: {e}")
-
 # Function to start Nessus
 def start_nessus():
     print("\nAutomating Nessus...\n")
@@ -93,12 +82,10 @@ def start_armitage():
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
-        start_openvas()
-    elif tool_choice == "2":
         start_nessus()
-    elif tool_choice == "3":
+    elif tool_choice == "2":
         start_armitage()
-    elif tool_choice == "4":
+    elif tool_choice == "3":
         start_akto()
     else:
         print("Invalid choice, please try again.")
@@ -107,14 +94,13 @@ def automate_tool(tool_choice):
 def automation_submenu():
     while True:
         print("\nAutomation Options:")
-        print("1. OpenVAS")
-        print("2. Nessus")
-        print("3. Armitage")
-        print("4. Akto")
-        print("5. Back to main menu")
+        print("1. Nessus")
+        print("2. Armitage")
+        print("3. Akto")
+        print("4. Back to main menu")
         
-        tool_choice = input("Enter your choice [1-5]: ")
-        if tool_choice == "5":
+        tool_choice = input("Enter your choice [1-4]: ")
+        if tool_choice == "4":
             break
         else:
             automate_tool(tool_choice)  # Automate the selected tool
