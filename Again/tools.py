@@ -16,12 +16,35 @@ def automate_tool(tool_choice):
 # Nessus Automation with subcategories
 def start_nessus():
     print("\nAutomating Nessus...\n")
-    install_tool("nessusd", "nessus")  # Ensure Nessus is installed
     try:
-        subprocess.run(["sudo", "systemctl", "start", "nessusd"], check=True)
-        print("Nessus has been started and is accessible via https://127.0.0.1:8834\n")
+        # Check if Nessus is installed
+        result = subprocess.run("which nessusd", shell=True, capture_output=True)
+        if result.returncode != 0:
+            print("Nessus not installed. Please install Nessus manually.")
+            return
+
+        # Check if Nessus service is running
+        service_status = subprocess.run("systemctl is-active nessusd", shell=True, capture_output=True)
+        if service_status.returncode != 0:
+            print("Starting Nessus service...")
+            subprocess.run(["sudo", "systemctl", "start", "nessusd"], check=True)
+            print("Nessus service started. Access it via https://127.0.0.1:8834")
+        else:
+            print("Nessus service is already running. Access it via https://127.0.0.1:8834")
+
+        # Check Nessus server status
+        server_status = subprocess.run(["curl", "-k", "https://127.0.0.1:8834/server/status"], capture_output=True, text=True)
+        if server_status.returncode == 0:
+            print("Nessus server status:", server_status.stdout)
+        else:
+            print("Failed to get Nessus server status.")
+
+        # Update Nessus
+        print("Updating Nessus...")
+        subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "update"], check=True)
+        print("Nessus has been updated.")
     except subprocess.CalledProcessError as e:
-        print(f"Error starting Nessus: {e}")
+        print(f"Error while starting or updating Nessus: {e}")
 
 # Armitage Automation with subcategories
 def start_armitage():
