@@ -16,13 +16,8 @@ def automate_tool(tool_choice):
 # Nessus Automation with subcategories
 def start_nessus():
     print("\nAutomating Nessus...\n")
+    install_tool("nessusd", "nessus")  # Ensure Nessus is installed
     try:
-        # Check if Nessus is installed
-        result = subprocess.run("which nessusd", shell=True, capture_output=True)
-        if result.returncode != 0:
-            print("Nessus not installed. Please install Nessus manually.")
-            return
-
         # Check if Nessus service is running
         service_status = subprocess.run("systemctl is-active nessusd", shell=True, capture_output=True)
         if service_status.returncode != 0:
