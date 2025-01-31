@@ -28,9 +28,9 @@ def start_nessus():
         # Check if Nessus is installed
         result = subprocess.run("which nessusd", shell=True, capture_output=True)
         if result.returncode != 0:
-            print("Nessus not installed. Installing...")
-            subprocess.run(["sudo", "apt", "update"], check=True)
-            subprocess.run(["sudo", "apt", "install", "-y", "nessus"], check=True)
+            print("Nessus not installed. Downloading and installing...")
+            subprocess.run(["wget", "https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/16437/download?i_agree_to_tenable_license_agreement=true", "-O", "Nessus-10.0.2-ubuntu1110_amd64.deb"], check=True)
+            subprocess.run(["sudo", "dpkg", "-i", "Nessus-10.0.2-ubuntu1110_amd64.deb"], check=True)
             subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "fetch", "--register"], check=True)
             subprocess.run(["sudo", "systemctl", "enable", "nessusd"], check=True)
             print("Nessus installed and configured.")
