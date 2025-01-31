@@ -23,7 +23,8 @@ def install_tool(tool_name, package_name=None, post_install_cmd=None):
 
 # Function to start OpenVAS
 def start_openvas():
-    install_tool("gvm-start", "gvm")
+    print("\nAutomating OpenVAS...\n")
+    install_tool("gvm-start", "gvm")  # Ensure OpenVAS is installed
     print("Starting OpenVAS...")
     try:
         subprocess.run(["sudo", "gvm-start"], check=True)
@@ -33,6 +34,7 @@ def start_openvas():
 
 # Function to start Nessus
 def start_nessus():
+    print("\nAutomating Nessus...\n")
     try:
         # Check if Nessus is installed
         result = subprocess.run("which nessusd", shell=True, capture_output=True)
@@ -56,35 +58,30 @@ def start_nessus():
             print("Nessus service is already running. Access it via https://127.0.0.1:8834")
     except subprocess.CalledProcessError as e:
         print(f"Error while installing or starting Nessus: {e}")
-# Akto Automation with subcategories
+
+# Function to start Akto
 def start_akto():
-    print(f"Checking if {start_akto} is installed...\n")
+    print("\nAutomating Akto...\n")
+    akto_path = os.path.expanduser("~/akto")  # Ensure ~ is expanded correctly
     
-    if start_akto == "akto":
-        # Check for Akto installation and install it if not present
-        akto_path = os.path.expanduser("~/akto")  # Ensure ~ is expanded correctly
-        
-        if not os.path.isdir(akto_path):
-            print(f"Akto not found. Installing...\n")
-            try:
-                # Clone Akto repository
-                os.system(f"git clone https://github.com/akto-api-security/akto.git {akto_path}")
-                
-                # Change to the Akto directory and start Akto
-                os.chdir(akto_path)
-                os.system("docker-compose up -d")  # Install and start Akto via Docker Compose
-                print(f"Akto has been installed and started.\n")
-            except Exception as e:
-                print(f"Error during Akto installation or startup: {e}")
-        else:
-            print(f"Akto is already installed.\n")
-        
+    if not os.path.isdir(akto_path):
+        print("Akto not found. Installing...\n")
+        try:
+            # Clone Akto repository
+            os.system(f"git clone https://github.com/akto-api-security/akto.git {akto_path}")
+            
+            # Change to the Akto directory and start Akto
+            os.chdir(akto_path)
+            os.system("docker-compose up -d")  # Install and start Akto via Docker Compose
+            print("Akto has been installed and started.\n")
+        except Exception as e:
+            print(f"Error during Akto installation or startup: {e}")
     else:
-        print(f"Installation check for {start_akto}...\n")
-        
+        print("Akto is already installed.\n")
 
 # Function to start Armitage
 def start_armitage():
+    print("\nAutomating Armitage...\n")
     install_tool("armitage", "armitage")
     print("Starting Armitage...")
     try:
@@ -92,6 +89,7 @@ def start_armitage():
         print("Armitage started. Please wait for the GUI to appear.")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
+
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
@@ -104,28 +102,6 @@ def automate_tool(tool_choice):
         start_akto()
     else:
         print("Invalid choice, please try again.")
-
-# OpenVAS Automation with subcategories
-def start_openvas():
-    print("\nAutomating OpenVAS...\n")
-    install_tool("gvm-start", "gvm")  # Ensure OpenVAS is installed
-    start_openvas()  # Start OpenVAS
-    print("OpenVAS has been started and is accessible via https://127.0.0.1:9392\n")
-
-# Nessus Automation with subcategories
-def start_nessus():
-    print("\nAutomating Nessus...\n")
-    install_tool("nessusd", "nessus")  # Ensure Nessus is installed
-    start_nessus()  # Start Nessus
-    print("Nessus has been started and is accessible via https://127.0.0.1:8834\n")
-
-# Armitage Automation with subcategories
-def start_armitage():
-    print("\nAutomating Armitage...\n")
-    install_tool("armitage", "armitage")  # Ensure Armitage is installed
-    start_armitage()  # Start Armitage
-    print("Armitage has been started. Please wait for the GUI to appear.\n")
-
 
 # Submenu for Automation Category
 def automation_submenu():
