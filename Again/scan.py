@@ -28,14 +28,8 @@ def start_nessus():
         # Check if Nessus is installed
         result = subprocess.run("which nessusd", shell=True, capture_output=True)
         if result.returncode != 0:
-            print("Nessus not installed. Downloading and installing...")
-            subprocess.run(["wget", "https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/16437/download?i_agree_to_tenable_license_agreement=true", "-O", "Nessus-10.0.2-ubuntu1110_amd64.deb"], check=True)
-            subprocess.run(["sudo", "dpkg", "-i", "Nessus-10.0.2-ubuntu1110_amd64.deb"], check=True)
-            subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "fetch", "--register"], check=True)
-            subprocess.run(["sudo", "systemctl", "enable", "nessusd"], check=True)
-            print("Nessus installed and configured.")
-        else:
-            print("Nessus is already installed.")
+            print("Nessus not installed. Please install Nessus manually.")
+            return
 
         # Check if Nessus service is running
         service_status = subprocess.run("systemctl is-active nessusd", shell=True, capture_output=True)
@@ -45,8 +39,13 @@ def start_nessus():
             print("Nessus service started. Access it via https://127.0.0.1:8834")
         else:
             print("Nessus service is already running. Access it via https://127.0.0.1:8834")
+
+        # Update Nessus
+        print("Updating Nessus...")
+        subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "update"], check=True)
+        print("Nessus has been updated.")
     except subprocess.CalledProcessError as e:
-        print(f"Error while installing or starting Nessus: {e}")
+        print(f"Error while starting or updating Nessus: {e}")
 
 # Function to start Akto
 def start_akto():
