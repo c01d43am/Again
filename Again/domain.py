@@ -28,23 +28,42 @@ def check_and_install_nikto():
     install_tool("nikto")
 
 #-------------------------------------------------------------------------------------------------------------
-def is_feroxbuster_installed():
-    """Check if feroxbuster is installed."""
+def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt", threads=10):
+    """Run feroxbuster for directory enumeration."""
+    
+    # Check if feroxbuster is installed
+    if not shutil.which("feroxbuster"):
+        print("[-] Feroxbuster is not installed. Installing now...")
+        try:
+            subprocess.run(["sudo", "apt", "install", "-y", "feroxbuster"], check=True)
+        except subprocess.CalledProcessError:
+            print("[-] Failed to install Feroxbuster. Please install it manually.")
+            return
+
+    print(f"\n[+] Running Feroxbuster on {target_url}...\n")
+
     try:
-        subprocess.run(["feroxbuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        return True
-    except FileNotFoundError:
-        return False
+        # Define output file
+        output_file = f"feroxbuster_{target_url.replace('.', '_')}.txt"
+        
+        # Run Feroxbuster and capture output
+        result = subprocess.run(
+            ["feroxbuster", "-u", target_url, "-w", wordlist, "-t", str(threads), "-o", output_file],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,  # Ensures output is treated as a string
+            check=True
+        )
 
-def install_feroxbuster():
-    """Install feroxbuster if not installed."""
-    print("[+] Installing feroxbuster...")
-    os.system("sudo apt update && sudo apt install -y feroxbuster")
+        print(result.stdout)  # Print scan results to console
+        print(f"[+] Feroxbuster scan completed for {target_url}. Results saved in {output_file}")
 
-def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
-    """Run feroxbuster with the given target URL and wordlist."""
-    print(f"[+] Running feroxbuster on {target_url}...")
-    os.system(f"feroxbuster -u {target_url} -w {wordlist}")
+    except subprocess.CalledProcessError as e:
+        print(f"[-] Failed to run Feroxbuster for {target_url}: {e}")
+
+# Example Usage:
+run_feroxbuster("http://example.com")
+
 
 #-------------------------------------------------------------------------------------------------------------
 def is_gobuster_installed():
