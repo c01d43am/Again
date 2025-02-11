@@ -86,7 +86,7 @@ def automation_submenu():
         print("4. Back to main menu")
         
         tool_choice = input("Enter your choice [1-4]: ")
-        if tool_choice == "5":
+        if tool_choice == "4":
             break
         else:
             automate_tool(tool_choice)  # Automate the selected tool
