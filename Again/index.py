@@ -41,7 +41,7 @@ def main():
         print("3. Exploits")
         print("4. Exit\n")
 
-        choice = input("Enter your choice [1-5]: ")
+        choice = input("Enter your choice [1-4]: ")
         if choice == "1":
             automation_submenu()  # Enter Automation Category submenu
         elif choice == "2":
