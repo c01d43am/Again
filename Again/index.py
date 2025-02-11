@@ -4,6 +4,7 @@
 # The user can select a category and then choose a specific tool or task to perform within that category.
 # The script includes submenus for each category to provide more options and functionalities.
 import sys
+import subprocess
 from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
