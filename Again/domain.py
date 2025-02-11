@@ -180,6 +180,19 @@ def subdomain_submenu():#subdomain-related tasks
             print("Exiting the vulnerability scan submenu...")
             break
         else:
+            print("Exiting the tool. Goodbye!")
+            break
+        else:
+            funny_responses = [
+                "Oops! That wasn't on the menu. Try again!",
+                "Nice try, but that's not an option!",
+                "Invalid choice. Are you testing my patience?",
+                "Error 404: Your choice not found!",
+                "You broke the menu... Just kidding, try again!"
+            ]
+            import random
+            print(random.choice(funny_responses))
+
             print("Invalid choice. Please select a valid option.")
 #-------------------------------------------------------------------------------------------------------------
 def main_menu():
