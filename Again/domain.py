@@ -201,7 +201,7 @@ def main_menu():
 
         choice = input("Please choose an option (1-2): ")
 
-        if choice == "1":
+        if choice == "1":#subdomain-related tasks
             target_url = input("Enter target URL: ")
             if not is_installed():
                 install_gobuster()
