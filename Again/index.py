@@ -8,6 +8,8 @@ from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
 import random
+from utils import install_tool
+
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
@@ -28,30 +30,8 @@ def display_banner():
     # Display version at the bottom left corner
     version = f"{green}\t\t\tv0.0.7 by c01d43am{reset}"
     print("\t\thttps://github.com/c01d43am")
-    print(f"\n{version}\n")  # Version at the bottom left corner
+    print(f"\n{version}\n")
 
-import subprocess
-
-# General function to check and install a tool
-def install_tool(tool_name, package_name=None, post_install_cmd=None):
-    if package_name is None:
-        package_name = tool_name
-
-    try:
-        # Check if the tool is installed
-        result = subprocess.run(f"which {tool_name}", shell=True, capture_output=True)
-        if result.returncode != 0:
-            print(f"{tool_name} not found. Installing...")
-            subprocess.run(["sudo", "apt", "update"], check=True)
-            subprocess.run(["sudo", "apt", "install", "-y", package_name], check=True)
-            print(f"{tool_name} installed successfully.")
-            if post_install_cmd:
-                subprocess.run(post_install_cmd, shell=True, check=True)
-        else:
-            print(f"{tool_name} is already installed.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error while installing {tool_name}: {e}")
-#-------------------------------------------------------------------------------------------------------------
 # Main script logics
 def main():
     display_banner()  # Display the banner
