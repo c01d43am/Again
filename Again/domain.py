@@ -202,12 +202,23 @@ def main_menu():
         choice = input("Please choose an option (1-2): ")
 
         if choice == "1":
-            subdomain_submenu()
+            target_url = input("Enter target URL: ")
+            if not is_installed():
+                install_gobuster()
+            run_gobuster(target_url)
         elif choice == "2":
             print("Exiting the tool. Goodbye!")
             break
         else:
-            print("Invalid choice. Please select a valid option.")
+            funny_responses = [
+                "Oops! That wasn't on the menu. Try again!",
+                "Nice try, but that's not an option!",
+                "Invalid choice. Are you testing my patience?",
+                "Error 404: Your choice not found!",
+                "You broke the menu... Just kidding, try again!"
+            ]
+            import random
+            print(random.choice(funny_responses))
 
 if __name__ == "__main__":
     main_menu()
