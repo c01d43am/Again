@@ -121,7 +121,7 @@ def subdomain_submenu():
         choice = input("Please choose an option (1-7): ")
         
         if choice == "1":
-            subdomain = input("Enter the subdomain to scan with Dirb: ")
+            subdomain = input("Enter the subdomain to scan with Dirb {Ex : google.com}: ")
             run_dirb_scan(subdomain)
         elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
