@@ -7,11 +7,13 @@ import sys
 from scan import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
+import random
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
     colors = ["\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m", "\033[36m"]
     reset = "\033[0m"  # Reset color
+    green = "\033[32m"  # Green color
     color = random.choice(colors)  # Pick a random color
 
     print(f"{color}")
@@ -59,8 +61,7 @@ def main():
                 "Error 404: Your choice not found!",
                 "You broke the menu... Just kidding, try again!"
             ]
-            import random
-            print(random.choice(funny_responses))
+             print(random.choice(funny_responses))
 
 if __name__ == "__main__":
     main()
