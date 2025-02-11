@@ -66,8 +66,11 @@ def run_gobuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
     """Run gobuster with the given target URL and wordlist."""
     if not is_gobuster_installed():
         install_gobuster()
-    print(f"[+] Running gobuster on {target_url}...")
-    os.system(f"gobuster dir -u {target_url} -w {wordlist}")
+    if is_gobuster_installed():
+        print(f"[+] Running gobuster on {target_url}...")
+        os.system(f"gobuster dir -u {target_url} -w {wordlist}")
+    else:
+        print("Failed to install gobuster. Please check your repository settings and try again.")
 
 #-------------------------------------------------------------------------------------------------------------
 def run_nmap_scan(subdomain, scan_type="full"):
