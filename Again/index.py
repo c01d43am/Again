@@ -53,8 +53,15 @@ def main():
             print("Ex2iting. Goodbye!")
             sys.exit(0)
         else:
-            print("Invalid choice, please try again.")
-        print()
+             funny_responses = [
+                "Oops! That wasn't on the menu. Try again!",
+                "Nice try, but that's not an option!",
+                "Invalid choice. Are you testing my patience?",
+                "Error 404: Your choice not found!",
+                "You broke the menu... Just kidding, try again!"
+            ]
+            import random
+            print(random.choice(funny_responses))
 
 #-------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
