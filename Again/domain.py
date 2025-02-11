@@ -89,30 +89,54 @@ def run_nikto_scan(subdomain):
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 
 #-------------------------------------------------------------------------------------------------------------
+import subprocess
+import shutil
+
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
-    
+
     # Check if sslscan is installed
     if not shutil.which("sslscan"):
         print("[-] SSLScan is not installed. Installing it now...")
         try:
-            subprocess.run(["sudo", "apt", "update"], check=True)
-            subprocess.run(["sudo", "apt", "install", "-y", "sslscan"], check=True)
+            subprocess.run(["sudo", "apt", "update"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(["sudo", "apt", "install", "-y", "sslscan"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            
+            # Check again if SSLScan is installed
+            if not shutil.which("sslscan"):
+                print("[-] SSLScan installation failed. Please install it manually.")
+                return
+            else:
+                print("[+] SSLScan installed successfully.")
         except subprocess.CalledProcessError:
             print("[-] Failed to install SSLScan. Please install it manually.")
             return
 
     print(f"\n[+] Running SSL/TLS scan for {subdomain}...\n")
-    
-    try:
-        # Run SSLScan and save output to a file
-        output_file = f"sslscan_{subdomain.replace('.', '_')}.txt"
-        with open(output_file, "w") as f:
-            subprocess.run(["sslscan", subdomain], stdout=f, stderr=subprocess.PIPE, check=True)
 
+    try:
+        # Define output file
+        output_file = f"sslscan_{subdomain.replace('.', '_')}.txt"
+        
+        # Run SSLScan and capture output
+        result = subprocess.run(
+            ["sslscan", subdomain],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,  # Ensures output is treated as a string
+            check=True
+        )
+
+        # Save output to file
+        with open(output_file, "w") as f:
+            f.write(result.stdout)
+
+        print(result.stdout)  # Print scan results to console
         print(f"[+] SSL/TLS scan completed for {subdomain}. Results saved in {output_file}")
+
     except subprocess.CalledProcessError as e:
         print(f"[-] Failed to run SSL/TLS scan for {subdomain}: {e}")
+
 
 #-------------------------------------------------------------------------------------------------------------
 def run_dirb_scan(subdomain):
