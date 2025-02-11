@@ -4,6 +4,7 @@
 # The user can choose to run Dirb, Nmap, Nikto, SSLscan, or Feroxbuster scans on a subdomain.
 import os
 import subprocess
+import shutil
 from utils import install_tool
 
 #-------------------------------------------------------------------------------------------------------------
@@ -90,12 +91,28 @@ def run_nikto_scan(subdomain):
 #-------------------------------------------------------------------------------------------------------------
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
-    print(f"\nRunning SSL/TLS scan for {subdomain}...")
+    
+    # Check if sslscan is installed
+    if not shutil.which("sslscan"):
+        print("[-] SSLScan is not installed. Installing it now...")
+        try:
+            subprocess.run(["sudo", "apt", "update"], check=True)
+            subprocess.run(["sudo", "apt", "install", "-y", "sslscan"], check=True)
+        except subprocess.CalledProcessError:
+            print("[-] Failed to install SSLScan. Please install it manually.")
+            return
+
+    print(f"\n[+] Running SSL/TLS scan for {subdomain}...\n")
+    
     try:
-        subprocess.run(f"sslscan {subdomain}", shell=True, check=True)
-        print(f"SSL/TLS scan completed for {subdomain}.")
+        # Run SSLScan and save output to a file
+        output_file = f"sslscan_{subdomain.replace('.', '_')}.txt"
+        with open(output_file, "w") as f:
+            subprocess.run(["sslscan", subdomain], stdout=f, stderr=subprocess.PIPE, check=True)
+
+        print(f"[+] SSL/TLS scan completed for {subdomain}. Results saved in {output_file}")
     except subprocess.CalledProcessError as e:
-        print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
+        print(f"[-] Failed to run SSL/TLS scan for {subdomain}: {e}")
 
 #-------------------------------------------------------------------------------------------------------------
 def run_dirb_scan(subdomain):
