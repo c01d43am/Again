@@ -1,7 +1,11 @@
+# Description: This file contains the functions to automate the selected tool.
+# The automate_tool function takes the user's choice and calls the appropriate function to automate the selected tool.
+# The start_nessus function automates Nessus by checking the service status, starting the service if not running, updating Nessus, and displaying the server status.
+# The start_armitage function automates Armitage by starting the Armitage GUI.
 import subprocess
 import os
 from Again.scan import install_tool
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
@@ -12,7 +16,7 @@ def automate_tool(tool_choice):
         start_akto()
     else:
         print("Invalid choice, please try again.")
-
+#-------------------------------------------------------------------------------------------------------------
 # Nessus Automation with subcategories
 def start_nessus():
     print("\nAutomating Nessus...\n")
@@ -41,6 +45,7 @@ def start_nessus():
     except subprocess.CalledProcessError as e:
         print(f"Error while starting or updating Nessus: {e}")
 
+#-------------------------------------------------------------------------------------------------------------
 # Armitage Automation with subcategories
 def start_armitage():
     print("\nAutomating Armitage...\n")
@@ -50,7 +55,7 @@ def start_armitage():
         print("Armitage has been started. Please wait for the GUI to appear.\n")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Akto Automation with subcategories
 def start_akto():
     print("\nAutomating Akto...\n")

@@ -1,3 +1,7 @@
+# Description: A tool to perform reconnaissance on a domain or subdomain. 
+# The tool checks and installs required tools like Nmap, sslscan, dirb, Nikto, and feroxbuster. 
+# It then provides a menu to run scans on subdomains using these tools. 
+# The user can choose to run Dirb, Nmap, Nikto, SSLscan, or Feroxbuster scans on a subdomain.
 import os
 import subprocess
 #-------------------------------------------------------------------------------------------------------------

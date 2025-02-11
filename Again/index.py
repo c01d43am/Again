@@ -1,3 +1,8 @@
+# Version: 0.0.7
+# Description: This script is a simple menu-driven tool that allows users to select different categories of tools to automate tasks.
+# The script provides three main categories: Automation Tool, Domain, and Exploits.
+# The user can select a category and then choose a specific tool or task to perform within that category.
+# The script includes submenus for each category to provide more options and functionalities.
 import sys
 from scan import automation_submenu
 from domain import subdomain_submenu
@@ -24,7 +29,7 @@ def display_banner():
     print("\t\thttps://github.com/c01d43am")
     print(f"\n{version}\n")  # Version at the bottom left corner
 
-
+#-------------------------------------------------------------------------------------------------------------
 # Main script logics
 def main():
     display_banner()  # Display the banner
@@ -51,6 +56,6 @@ def main():
             print("Invalid choice, please try again.")
         print()
 
-
+#-------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     main()

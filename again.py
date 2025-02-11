@@ -1,7 +1,9 @@
+# Description: This script is used to check for updates from the GitHub repository, display a loading animation, and execute index.py after completing all actions.
+# The script checks for updates from the GitHub repository by pulling the latest changes from the remote repository.
 import sys
 import time
 import subprocess
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to display a loading animation
 def loading_animation():
     animation = "|/-!@#$%^&*()_+\\"
@@ -10,7 +12,7 @@ def loading_animation():
             sys.stdout.write(f"\rLoading..........{char}")
             sys.stdout.flush()
             time.sleep(0.2)
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to display an "exploitation" animation
 def exploitation_animation():
     exploit_text = [
@@ -26,7 +28,7 @@ def exploitation_animation():
         time.sleep(1)
     
     print("\nExploit successful!")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to check for updates from the GitHub repository (Pull the latest changes)
 def check_for_updates():
     try:
@@ -36,7 +38,7 @@ def check_for_updates():
         print("GitHub repository is up-to-date.")
     except Exception as e:
         print(f"Error checking for updates: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to execute index.py after completing actions
 def run_index():
     print("\nExecuting ....\n")
@@ -45,7 +47,7 @@ def run_index():
         subprocess.run(["python3", "Again/index.py"])
     except Exception as e:
         print(f"Error !!!!!????: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Start the tool by checking for updates, then running the necessary functions
 def start_tool():
     print("\nStarting Tool...\n")

@@ -1,6 +1,9 @@
+# Description: This file contains functions to automate the installation and startup of security tools like Nessus, Armitage, and Akto.
+# The install_tool function checks if a tool is installed and installs it if not found.
+
 import subprocess
 import os
-
+#-------------------------------------------------------------------------------------------------------------
 # General function to check and install a tool
 def install_tool(tool_name, package_name=None, post_install_cmd=None):
     if package_name is None:
@@ -20,7 +23,7 @@ def install_tool(tool_name, package_name=None, post_install_cmd=None):
             print(f"{tool_name} is already installed.")
     except subprocess.CalledProcessError as e:
         print(f"Error while installing {tool_name}: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to start Nessus
 def start_nessus():
     print("\nAutomating Nessus...\n")
@@ -53,7 +56,7 @@ def start_nessus():
         print("Nessus has been updated.")
     except subprocess.CalledProcessError as e:
         print(f"Error while starting or updating Nessus: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to start Akto
 def start_akto():
     print("\nAutomating Akto...\n")
@@ -73,7 +76,7 @@ def start_akto():
             print(f"Error during Akto installation or startup: {e}")
     else:
         print("Akto is already installed.\n")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to start Armitage
 def start_armitage():
     print("\nAutomating Armitage...\n")
@@ -84,7 +87,7 @@ def start_armitage():
         print("Armitage started. Please wait for the GUI to appear.")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to automate the selected tool
 def automate_tool(tool_choice):
     if tool_choice == "1":
@@ -95,7 +98,7 @@ def automate_tool(tool_choice):
         start_akto()
     else:
         print("Invalid choice, please try again.")
-
+#-------------------------------------------------------------------------------------------------------------
 # Submenu for Automation Category
 def automation_submenu():
     while True:
