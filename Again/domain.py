@@ -211,7 +211,7 @@ def main_menu():
 
         if choice == "1":#subdomain-related tasks
             target_url = input("Enter target URL: ")
-            if not is_installed():
+            if not is_gobuster_installed():
                 install_gobuster()
             run_gobuster(target_url)
         elif choice == "2":
