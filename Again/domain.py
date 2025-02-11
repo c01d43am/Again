@@ -1,21 +1,7 @@
 import os
 import subprocess
-def check_and_install_nmap():
-    """Checks if Nmap is installed. Installs it if not found."""
-    try:
-        result = subprocess.run("where nmap", shell=True, capture_output=True)
-        if result.returncode == 0:
-            print("Nmap is already installed.")
-            return True
-        else:
-            print("Nmap is not installed. Installing now...")
-            os.system("choco install nmap -y")
-            print("Nmap has been installed successfully.")
-            return True
-    except Exception as e:
-        print(f"Failed to install Nmap: {e}")
-        return False
-def check_and_install_nmap():
+#-------------------------------------------------------------------------------------------------------------
+def check_and_install_nmap():#nmap is a network scanning tool
     """Checks if Nmap is installed. Installs it if not found."""
     try:
         result = subprocess.run("which nmap", shell=True, capture_output=True)
@@ -30,8 +16,8 @@ def check_and_install_nmap():
     except Exception as e:
         print(f"Failed to install Nmap: {e}")
         return False
-
-def check_and_install_sslscan():
+#-------------------------------------------------------------------------------------------------------------
+def check_and_install_sslscan():#sslscan is a tool to check SSL/TLS vulnerabilities
     """Checks if sslscan is installed. Installs it if not found."""
     try:
         result = subprocess.run("which sslscan", shell=True, capture_output=True)
@@ -46,8 +32,8 @@ def check_and_install_sslscan():
     except Exception as e:
         print(f"Failed to install sslscan: {e}")
         return False
-
-def check_and_install_dirb():
+#-------------------------------------------------------------------------------------------------------------
+def check_and_install_dirb():#dirb is a tool to check directories and files
     """Checks if dirb is installed. Installs it if not found."""
     try:
         result = subprocess.run("which dirb", shell=True, capture_output=True)
@@ -62,8 +48,8 @@ def check_and_install_dirb():
     except Exception as e:
         print(f"Failed to install dirb: {e}")
         return False
-
-def check_and_install_nikto():
+#-------------------------------------------------------------------------------------------------------------
+def check_and_install_nikto():#nikto is a web server scanner
     """Checks if Nikto is installed. Installs it if not found."""
     try:
         result = subprocess.run("which nikto", shell=True, capture_output=True)
@@ -78,6 +64,25 @@ def check_and_install_nikto():
     except Exception as e:
         print(f"Failed to install Nikto: {e}")
         return False
+#-------------------------------------------------------------------------------------------------------------
+def is_feroxbuster_installed():#feroxbuster is a directory and file brute-forcing tool
+    """Check if feroxbuster is installed."""
+    try:
+        subprocess.run(["feroxbuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return True
+    except FileNotFoundError:
+        return False
+
+def install_feroxbuster():
+    """Install feroxbuster if not installed."""
+    print("[+] Installing feroxbuster...")
+    os.system("sudo apt update && sudo apt install -y feroxbuster")
+
+def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
+    """Run feroxbuster with the given target URL and wordlist."""
+    print(f"[+] Running feroxbuster on {target_url}...")
+    os.system(f"feroxbuster -u {target_url} -w {wordlist}")
+
 def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
@@ -89,8 +94,8 @@ def run_nmap_scan(subdomain, scan_type="full"):
         print(f"Nmap scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
-
-def run_nikto_scan(subdomain):
+#-------------------------------------------------------------------------------------------------------------
+def run_nikto_scan(subdomain):#nikto is a web server scanner
     """Run Nikto scan for vulnerabilities."""
     print(f"\nRunning Nikto scan for {subdomain}...")
     try:
@@ -98,8 +103,8 @@ def run_nikto_scan(subdomain):
         print(f"Nikto scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
-
-def run_sslscan(subdomain):
+#-------------------------------------------------------------------------------------------------------------
+def run_sslscan(subdomain):#sslscan is a tool to check SSL/TLS vulnerabilities
     """Run sslscan to check for SSL/TLS vulnerabilities."""
     print(f"\nRunning SSL/TLS scan for {subdomain}...")
     try:
@@ -107,16 +112,16 @@ def run_sslscan(subdomain):
         print(f"SSL/TLS scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
-
-def run_dirb_scan(subdomain):
+#-------------------------------------------------------------------------------------------------------------
+def run_dirb_scan(subdomain):#dirb is a tool to check directories and files
     """Run Dirb scan to check for directories and files."""
     try:
         subprocess.run(f"dirb http://{subdomain}", shell=True, check=True)
         print(f"Dirb scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Dirb scan for {subdomain}: {e}")
-
-def subdomain_submenu():
+#-------------------------------------------------------------------------------------------------------------
+def subdomain_submenu():#subdomain-related tasks
     """Submenu to handle subdomain-related tasks."""
     while True:
         print("\nSubdomain Submenu:")
@@ -124,8 +129,9 @@ def subdomain_submenu():
         print("2. Run Nmap Scan")
         print("3. Run Nikto Scan")
         print("4. Run SSLscan")
-        print("5. Exit")
-        choice = input("Please choose an option (1-5): ")
+        print("5. Run Feroxbuster")
+        print("6. Exit")
+        choice = input("Please choose an option (1-6): ")
         
         if choice == "1":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
@@ -141,11 +147,14 @@ def subdomain_submenu():
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
         elif choice == "5":
+            subdomain = input("Enter the subdomain to scan with Feroxbuster: ")
+            run_feroxbuster(subdomain)
+        elif choice == "6":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
             print("Invalid choice. Please select a valid option.")
-
+#-------------------------------------------------------------------------------------------------------------
 def main_menu():
     """Main menu for the tool that checks and installs required tools."""
     print("Welcome to the Recon Tool!")
@@ -153,8 +162,10 @@ def main_menu():
     check_and_install_sslscan()
     check_and_install_dirb()
     check_and_install_nikto()
-
-    while True:
+    if not is_feroxbuster_installed():
+        install_feroxbuster()
+#-------------------------------------------------------------------------------------------------------------
+    while True:#main menu
         print("\nMain Menu:")
         print("1. Subdomain Tasks")
         print("2. Exit")
