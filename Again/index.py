@@ -36,32 +36,36 @@ def main():
     display_banner()  # Display the banner
     print("Starting menu...")
 
-    while True:
-        print("\nSelect a task to perform:")
-        print("1. Automation Tool")
-        print("2. Domain")
-        print("3. Exploits")
-        print("4. Exit\n")
+    try:
+        while True:
+            print("\nSelect a task to perform:")
+            print("1. Automation Tool")
+            print("2. Domain")
+            print("3. Exploits")
+            print("4. Exit\n")
 
-        choice = input("Enter your choice [1-4]: ")
-        if choice == "1":
-            automation_submenu()  # Enter Automation Category submenu
-        elif choice == "2":
-            subdomain_submenu()  # Enter Domain submenu
-        elif choice == "3":
-            exploit_tool_menu()  # Enter Domain submenu
-        elif choice == "4":
-            print("Ex2iting. Goodbye!")
-            sys.exit(0)
-        else:
-             funny_responses = [
-                "Oops! That wasn't on the menu. Try again!",
-                "Nice try, but that's not an option!",
-                "Invalid choice. Are you testing my patience?",
-                "Error 404: Your choice not found!",
-                "You broke the menu... Just kidding, try again!"
-            ]
-             print(random.choice(funny_responses))
+            choice = input("Enter your choice [1-4]: ")
+            if choice == "1":
+                automation_submenu()  # Enter Automation Category submenu
+            elif choice == "2":
+                subdomain_submenu()  # Enter Domain submenu
+            elif choice == "3":
+                exploit_tool_menu()  # Enter Domain submenu
+            elif choice == "4":
+                print("Exiting. Goodbye!")
+                sys.exit(0)
+            else:
+                funny_responses = [
+                    "Oops! That wasn't on the menu. Try again!",
+                    "Nice try, but that's not an option!",
+                    "Invalid choice. Are you testing my patience?",
+                    "Error 404: Your choice not found!",
+                    "You broke the menu... Just kidding, try again!"
+                ]
+                print(random.choice(funny_responses))
+    except KeyboardInterrupt:
+        print("\n[!] KeyboardInterrupt detected. Exiting gracefully...")
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
