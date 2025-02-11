@@ -108,7 +108,7 @@ def run_nikto_scan(subdomain):#nikto is a web server scanner
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 #-------------------------------------------------------------------------------------------------------------
-def is_gobuster_installed():
+def is_gobuster_installed(): #gobuster is a directory and file brute-forcing tool
     """Check if gobuster is installed."""
     try:
         subprocess.run(["gobuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
@@ -171,10 +171,10 @@ def subdomain_submenu():#subdomain-related tasks
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
         elif choice == "5":
-            subdomain = input("Enter the subdomain to scan with Feroxbuster: ")
+            subdomain = input("Enter the subdomain to scan with Feroxbuster:{ex: https://google.com/} ")
             run_feroxbuster(subdomain)
         elif choice == "6":
-            subdomain = input("Enter the subdomain to scan with Gobuster: ")
+            subdomain = input("Enter the subdomain to scan with Gobuster {ex: google.com}: ")
             run_gobuster(subdomain)
         elif choice == "7":
             print("Exiting the vulnerability scan submenu...")
