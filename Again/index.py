@@ -9,7 +9,7 @@ from domain import subdomain_submenu
 from exploit import exploit_tool_menu
 import random
 from utils import install_tool
-
+#-------------------------------------------------------------------------------------------------------------
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
@@ -31,14 +31,14 @@ def display_banner():
     version = f"{green}\t\t\tv0.0.7 by c01d43am{reset}"
     print("\t\thttps://github.com/c01d43am")
     print(f"\n{version}\n")
-
+#-------------------------------------------------------------------------------------------------------------
 # Main script logics
 def main():
     display_banner()  # Display the banner
     print("Starting menu...")
 
     try:
-        while True:
+        while True:#The user can select a category and then choose a specific tool or task to perform within that category.
             print("\nSelect a task to perform:")
             print("1. Automation Tool")
             print("2. Domain")
@@ -67,6 +67,6 @@ def main():
     except KeyboardInterrupt:
         print("\n[!] KeyboardInterrupt detected. Exiting gracefully...")
         sys.exit(0)
-
+#-------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     main()
