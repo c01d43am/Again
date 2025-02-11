@@ -43,6 +43,8 @@ def install_feroxbuster():
 
 def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
     """Run feroxbuster with the given target URL and wordlist."""
+    if not is_feroxbuster_installed():
+        install_feroxbuster()
     print(f"[+] Running feroxbuster on {target_url}...")
     os.system(f"feroxbuster -u {target_url} -w {wordlist}")
 
@@ -62,12 +64,15 @@ def install_gobuster():
 
 def run_gobuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
     """Run gobuster with the given target URL and wordlist."""
+    if not is_gobuster_installed():
+        install_gobuster()
     print(f"[+] Running gobuster on {target_url}...")
     os.system(f"gobuster dir -u {target_url} -w {wordlist}")
 
 #-------------------------------------------------------------------------------------------------------------
 def run_nmap_scan(subdomain, scan_type="full"):
     """Run an Nmap scan on the subdomain to check for open ports."""
+    check_and_install_nmap()
     print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
     try:
         if scan_type == "fast":
@@ -81,6 +86,7 @@ def run_nmap_scan(subdomain, scan_type="full"):
 #-------------------------------------------------------------------------------------------------------------
 def run_nikto_scan(subdomain):
     """Run Nikto scan for vulnerabilities."""
+    check_and_install_nikto()
     print(f"\nRunning Nikto scan for {subdomain}...")
     try:
         subprocess.run(f"nikto -h {subdomain}", shell=True, check=True)
@@ -89,58 +95,21 @@ def run_nikto_scan(subdomain):
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 
 #-------------------------------------------------------------------------------------------------------------
-import subprocess
-import shutil
-
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
-
-    # Check if sslscan is installed
-    if not shutil.which("sslscan"):
-        print("[-] SSLScan is not installed. Installing it now...")
-        try:
-            subprocess.run(["sudo", "apt", "update"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            subprocess.run(["sudo", "apt", "install", "-y", "sslscan"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            
-            # Check again if SSLScan is installed
-            if not shutil.which("sslscan"):
-                print("[-] SSLScan installation failed. Please install it manually.")
-                return
-            else:
-                print("[+] SSLScan installed successfully.")
-        except subprocess.CalledProcessError:
-            print("[-] Failed to install SSLScan. Please install it manually.")
-            return
-
-    print(f"\n[+] Running SSL/TLS scan for {subdomain}...\n")
-
+    check_and_install_sslscan()
+    print(f"\nRunning SSL/TLS scan for {subdomain}...")
     try:
-        # Define output file
-        output_file = f"sslscan_{subdomain.replace('.', '_')}.txt"
-        
-        # Run SSLScan and capture output
-        result = subprocess.run(
-            ["sslscan", subdomain],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,  # Ensures output is treated as a string
-            check=True
-        )
-
-        # Save output to file
-        with open(output_file, "w") as f:
-            f.write(result.stdout)
-
-        print(result.stdout)  # Print scan results to console
-        print(f"[+] SSL/TLS scan completed for {subdomain}. Results saved in {output_file}")
-
+        subprocess.run(f"sslscan {subdomain}", shell=True, check=True)
+        print(f"SSL/TLS scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
-        print(f"[-] Failed to run SSL/TLS scan for {subdomain}: {e}")
-
+        print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
 
 #-------------------------------------------------------------------------------------------------------------
 def run_dirb_scan(subdomain):
     """Run Dirb scan to check for directories and files."""
+    check_and_install_dirb()
+    print(f"[+] Running Dirb scan on {subdomain}...")
     try:
         subprocess.run(f"dirb http://{subdomain}", shell=True, check=True)
         print(f"Dirb scan completed for {subdomain}.")
@@ -162,7 +131,7 @@ def subdomain_submenu():
         choice = input("Please choose an option (1-7): ")
         
         if choice == "1":
-            subdomain = input("Enter the subdomain to scan with Dirb {Ex : google.com}: ")
+            subdomain = input("Enter the subdomain to scan with Dirb: ")
             run_dirb_scan(subdomain)
         elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
