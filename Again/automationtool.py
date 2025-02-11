@@ -1,53 +1,91 @@
-# Description: A tool to perform reconnaissance on a domain or subdomain. 
-# The tool checks and installs required tools like Nmap, sslscan, dirb, Nikto, and feroxbuster. 
-# It then provides a menu to run scans on subdomains using these tools. 
-# The user can choose to run Dirb, Nmap, Nikto, SSLscan, or Feroxbuster scans on a subdomain.
-import os
+# Description: This file contains the functions to automate the selected tool.
+# The automate_tool function takes the user's choice and calls the appropriate function to automate the selected tool.
+# The start_nessus function automates Nessus by checking the service status, starting the service if not running, updating Nessus, and displaying the server status.
+# The start_armitage function automates Armitage by starting the Armitage GUI.
 import subprocess
+import os
 from utils import install_tool
 
-#-------------------------------------------------------------------------------------------------------------
-def check_and_install_nmap():
-    """Checks if Nmap is installed. Installs it if not found."""
-    install_tool("nmap")
+# Function to automate the selected tool
+def automate_tool(tool_choice):
+    if tool_choice == "1":
+        start_nessus()
+    elif tool_choice == "2":
+        start_armitage()
+    elif tool_choice == "3":
+        start_akto()
+    elif tool_choice == "4":
+        start_gobuster()
+    else:
+        print("Invalid choice, please try again.")
 
-#-------------------------------------------------------------------------------------------------------------
-def check_and_install_sslscan():
-    """Checks if sslscan is installed. Installs it if not found."""
-    install_tool("sslscan")
-
-#-------------------------------------------------------------------------------------------------------------
-def check_and_install_dirb():
-    """Checks if dirb is installed. Installs it if not found."""
-    install_tool("dirb")
-
-#-------------------------------------------------------------------------------------------------------------
-def check_and_install_nikto():
-    """Checks if Nikto is installed. Installs it if not found."""
-    install_tool("nikto")
-
-#-------------------------------------------------------------------------------------------------------------
-def is_feroxbuster_installed():
-    """Check if feroxbuster is installed."""
+# Nessus Automation with subcategories
+def start_nessus():
+    print("\nAutomating Nessus...\n")
+    install_tool("nessusd", "nessus")  # Ensure Nessus is installed
     try:
-        subprocess.run(["feroxbuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        return True
-    except FileNotFoundError:
-        return False
+        # Check if Nessus service is running
+        service_status = subprocess.run("systemctl is-active nessusd", shell=True, capture_output=True)
+        if service_status.returncode != 0:
+            print("Starting Nessus service...")
+            subprocess.run(["sudo", "systemctl", "start", "nessusd"], check=True)
+            print("Nessus service started. Access it via https://127.0.0.1:8834")
+        else:
+            print("Nessus service is already running. Access it via https://127.0.0.1:8834")
 
-def install_feroxbuster():
-    """Install feroxbuster if not installed."""
-    print("[+] Installing feroxbuster...")
-    os.system("sudo apt update && sudo apt install -y feroxbuster")
+        # Check Nessus server status
+        server_status = subprocess.run(["curl", "-k", "https://127.0.0.1:8834/server/status"], capture_output=True, text=True)
+        if server_status.returncode == 0:
+            print("Nessus server status:", server_status.stdout)
+        else:
+            print("Failed to get Nessus server status.")
 
-def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
-    """Run feroxbuster with the given target URL and wordlist."""
-    if not is_feroxbuster_installed():
-        install_feroxbuster()
-    print(f"[+] Running feroxbuster on {target_url}...")
-    os.system(f"feroxbuster -u {target_url} -w {wordlist}")
+        # Update Nessus
+        print("Updating Nessus...")
+        subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "update"], check=True)
+        print("Nessus has been updated.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error while starting or updating Nessus: {e}")
 
-#-------------------------------------------------------------------------------------------------------------
+# Armitage Automation with subcategories
+def start_armitage():
+    print("\nAutomating Armitage...\n")
+    install_tool("armitage", "armitage")  # Ensure Armitage is installed
+    try:
+        subprocess.Popen(["armitage"])
+        print("Armitage has been started. Please wait for the GUI to appear.\n")
+    except Exception as e:
+        print(f"Error starting Armitage: {e}")
+
+# Akto Automation with subcategories
+def start_akto():
+    print("\nAutomating Akto...\n")
+    akto_path = os.path.expanduser("~/akto")  # Ensure ~ is expanded correctly
+    
+    if not os.path.isdir(akto_path):
+        print("Akto not found. Installing...\n")
+        try:
+            # Clone Akto repository
+            os.system(f"git clone https://github.com/akto-api-security/akto.git {akto_path}")
+            
+            # Change to the Akto directory and start Akto
+            os.chdir(akto_path)
+            os.system("docker-compose up -d")  # Install and start Akto via Docker Compose
+            print("Akto has been installed and started.\n")
+        except Exception as e:
+            print(f"Error during Akto installation or startup: {e}")
+    else:
+        print("Akto is already installed.\n")
+    print("Akto has been started. Please access it via http://127.0.0.1:9090\n")
+
+# Gobuster Automation with subcategories
+def start_gobuster():
+    print("\nAutomating Gobuster...\n")
+    if not is_gobuster_installed():
+        install_gobuster()
+    target_url = input("Enter target URL for Gobuster: ")
+    run_gobuster(target_url)
+
 def is_gobuster_installed():
     """Check if gobuster is installed."""
     try:
@@ -63,59 +101,22 @@ def install_gobuster():
 
 def run_gobuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
     """Run gobuster with the given target URL and wordlist."""
-    if not is_gobuster_installed():
-        install_gobuster()
-    if is_gobuster_installed():
-        print(f"[+] Running gobuster on {target_url}...")
-        os.system(f"gobuster dir -u {target_url} -w {wordlist}")
-    else:
-        print("Failed to install gobuster. Please check your repository settings and try again.")
+    print(f"[+] Running gobuster on {target_url}...")
+    subprocess.run(["gobuster", "dir", "-u", target_url, "-w", wordlist], check=True)
 
-#-------------------------------------------------------------------------------------------------------------
-def run_nmap_scan(subdomain, scan_type="full"):
-    """Run an Nmap scan on the subdomain to check for open ports."""
-    check_and_install_nmap()
-    print(f"\nRunning Nmap scan on {subdomain} (Scan Type: {scan_type})...")
-    try:
-        if scan_type == "fast":
-            subprocess.run(f"nmap -Pn -T4 -F {subdomain}", shell=True, check=True)  # Fast scan
+# Submenu for Automation Category
+def automation_submenu():
+    while True:
+        print("\nAutomation Options:")
+        print("1. Nessus")
+        print("2. Armitage")
+        print("3. Akto")
+        print("4. Gobuster")
+        print("5. Back to main menu")
+        
+        tool_choice = input("Enter your choice [1-5]: ")
+        if tool_choice == "5":
+            break
         else:
-            subprocess.run(f"nmap -Pn {subdomain}", shell=True, check=True)  # Full scan
-        print(f"Nmap scan completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run Nmap scan for {subdomain}: {e}")
-
-#-------------------------------------------------------------------------------------------------------------
-def run_nikto_scan(subdomain):
-    """Run Nikto scan for vulnerabilities."""
-    check_and_install_nikto()
-    print(f"\nRunning Nikto scan for {subdomain}...")
-    try:
-        subprocess.run(f"nikto -h {subdomain}", shell=True, check=True)
-        print(f"Nikto scan completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run Nikto scan for {subdomain}: {e}")
-
-#-------------------------------------------------------------------------------------------------------------
-def run_sslscan(subdomain):
-    """Run sslscan to check for SSL/TLS vulnerabilities."""
-    check_and_install_sslscan()
-    print(f"\nRunning SSL/TLS scan for {subdomain}...")
-    try:
-        subprocess.run(f"sslscan {subdomain}", shell=True, check=True)
-        print(f"SSL/TLS scan completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run SSL/TLS scan for {subdomain}: {e}")
-
-#-------------------------------------------------------------------------------------------------------------
-def run_dirb_scan(subdomain):
-    """Run Dirb scan to check for directories and files."""
-    check_and_install_dirb()
-    print(f"[+] Running Dirb scan on {subdomain}...")
-    try:
-        subprocess.run(f"dirb http://{subdomain}", shell=True, check=True)
-        print(f"Dirb scan completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run Dirb scan for {subdomain}: {e}")
-
-#------------------------------------------------------------------------------------------------------------
+            automate_tool(tool_choice)  # Automate the selected tool
+            print()  # New line for clarity
