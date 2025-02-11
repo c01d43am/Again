@@ -66,6 +66,15 @@ run_feroxbuster("http://example.com")
 
 
 #-------------------------------------------------------------------------------------------------------------
+def is_feroxbuster_installed():
+    """Check if feroxbuster is installed."""
+    return shutil.which("feroxbuster") is not None
+
+def install_feroxbuster():
+    """Install feroxbuster if not installed."""
+    print("[+] Installing feroxbuster...")
+    os.system("sudo apt update && sudo apt install -y feroxbuster")
+
 def is_gobuster_installed():
     """Check if gobuster is installed."""
     try:
