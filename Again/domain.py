@@ -108,6 +108,25 @@ def run_nikto_scan(subdomain):#nikto is a web server scanner
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 #-------------------------------------------------------------------------------------------------------------
+def is_gobuster_installed():
+    """Check if gobuster is installed."""
+    try:
+        subprocess.run(["gobuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return True
+    except FileNotFoundError:
+        return False
+
+def install_gobuster():
+    """Install gobuster if not installed."""
+    print("[+] Installing gobuster...")
+    os.system("sudo apt update && sudo apt install -y gobuster")
+
+def run_gobuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
+    """Run gobuster with the given target URL and wordlist."""
+    print(f"[+] Running gobuster on {target_url}...")
+    os.system(f"gobuster dir -u {target_url} -w {wordlist}")
+
+#-------------------------------------------------------------------------------------------------------------
 def run_sslscan(subdomain):#sslscan is a tool to check SSL/TLS vulnerabilities
     """Run sslscan to check for SSL/TLS vulnerabilities."""
     print(f"\nRunning SSL/TLS scan for {subdomain}...")
@@ -134,8 +153,9 @@ def subdomain_submenu():#subdomain-related tasks
         print("3. Run Nikto Scan")
         print("4. Run SSLscan")
         print("5. Run Feroxbuster")
-        print("6. Exit")
-        choice = input("Please choose an option (1-6): ")
+        print("6. Run Gobuster")
+        print("7. Exit")
+        choice = input("Please choose an option (1-7): ")
         
         if choice == "1":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
@@ -154,6 +174,9 @@ def subdomain_submenu():#subdomain-related tasks
             subdomain = input("Enter the subdomain to scan with Feroxbuster: ")
             run_feroxbuster(subdomain)
         elif choice == "6":
+            subdomain = input("Enter the subdomain to scan with Gobuster: ")
+            run_gobuster(subdomain)
+        elif choice == "7":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
@@ -168,6 +191,8 @@ def main_menu():
     check_and_install_nikto()
     if not is_feroxbuster_installed():
         install_feroxbuster()
+    if not is_gobuster_installed():
+        install_gobuster()
 #-------------------------------------------------------------------------------------------------------------
     while True:#main menu
         print("\nMain Menu:")
