@@ -4,7 +4,8 @@
 # The start_armitage function automates Armitage by starting the Armitage GUI.
 import subprocess
 import os
-from Again.scan import install_tool
+from index import install_tool
+
 #-------------------------------------------------------------------------------------------------------------
 # Function to automate the selected tool
 def automate_tool(tool_choice):
@@ -14,8 +15,11 @@ def automate_tool(tool_choice):
         start_armitage()
     elif tool_choice == "3":
         start_akto()
+    elif tool_choice == "4":
+        start_gobuster()
     else:
         print("Invalid choice, please try again.")
+
 #-------------------------------------------------------------------------------------------------------------
 # Nessus Automation with subcategories
 def start_nessus():
@@ -55,6 +59,7 @@ def start_armitage():
         print("Armitage has been started. Please wait for the GUI to appear.\n")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
+
 #-------------------------------------------------------------------------------------------------------------
 # Akto Automation with subcategories
 def start_akto():
@@ -76,4 +81,48 @@ def start_akto():
     else:
         print("Akto is already installed.\n")
     print("Akto has been started. Please access it via http://127.0.0.1:9090\n")
+
 #-------------------------------------------------------------------------------------------------------------
+# Gobuster Automation with subcategories
+def start_gobuster():
+    print("\nAutomating Gobuster...\n")
+    if not is_gobuster_installed():
+        install_gobuster()
+    target_url = input("Enter target URL for Gobuster: ")
+    run_gobuster(target_url)
+
+def is_gobuster_installed():
+    """Check if gobuster is installed."""
+    try:
+        subprocess.run(["gobuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return True
+    except FileNotFoundError:
+        return False
+
+def install_gobuster():
+    """Install gobuster if not installed."""
+    print("[+] Installing gobuster...")
+    os.system("sudo apt update && sudo apt install -y gobuster")
+
+def run_gobuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt"):
+    """Run gobuster with the given target URL and wordlist."""
+    print(f"[+] Running gobuster on {target_url}...")
+    os.system(f"gobuster dir -u {target_url} -w {wordlist}")
+
+#-------------------------------------------------------------------------------------------------------------
+# Submenu for Automation Category
+def automation_submenu():
+    while True:
+        print("\nAutomation Options:")
+        print("1. Nessus")
+        print("2. Armitage")
+        print("3. Akto")
+        print("4. Gobuster")
+        print("5. Back to main menu")
+        
+        tool_choice = input("Enter your choice [1-5]: ")
+        if tool_choice == "5":
+            break
+        else:
+            automate_tool(tool_choice)  # Automate the selected tool
+            print()  # New line for clarity
