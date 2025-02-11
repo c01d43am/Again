@@ -10,12 +10,11 @@ from exploit import exploit_tool_menu
 # Function to display the banner with color
 def display_banner():
     # ANSI escape codes for colors
-    red = "\033[31m"  # Red color
-    green = "\033[32m"  # Green color
+    colors = ["\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m", "\033[36m"]
     reset = "\033[0m"  # Reset color
+    color = random.choice(colors)  # Pick a random color
 
-    # Banner with version in green
-    print(f"{red}")
+    print(f"{color}")
     print("""
 ░█████╗░░██████╗░░█████╗░██╗███╗░░██╗░█████╗░
 ██╔══██╗██╔════╝░██╔══██╗██║████╗░██║██╔══██╗
@@ -63,6 +62,5 @@ def main():
             import random
             print(random.choice(funny_responses))
 
-#-------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     main()
