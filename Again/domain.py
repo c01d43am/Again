@@ -4,6 +4,7 @@
 # The user can choose to run Dirb, Nmap, Nikto, SSLscan, or Feroxbuster scans on a subdomain.
 import os
 import subprocess
+from index import install_tool
 #-------------------------------------------------------------------------------------------------------------
 def check_and_install_nmap():#nmap is a network scanning tool
     """Checks if Nmap is installed. Installs it if not found."""

@@ -5,7 +5,7 @@
 import subprocess
 import os
 from index import install_tool
-
+from index import install_tool
 #-------------------------------------------------------------------------------------------------------------
 # Function to automate the selected tool
 def automate_tool(tool_choice):
