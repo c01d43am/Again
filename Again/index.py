@@ -3,7 +3,6 @@ from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
 import random
-from utils import install_tool
 
 # Function to display the banner with color
 def display_banner():
