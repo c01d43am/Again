@@ -33,7 +33,7 @@ def is_feroxbuster_installed():
     try:
         subprocess.run(["feroxbuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         return True
-    except FileNotFoundError:
+    except (FileNotFoundError, subprocess.CalledProcessError):
         return False
 
 def install_feroxbuster():
@@ -54,7 +54,7 @@ def is_gobuster_installed():
     try:
         subprocess.run(["gobuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         return True
-    except FileNotFoundError:
+    except (FileNotFoundError, subprocess.CalledProcessError):
         return False
 
 def install_gobuster():
