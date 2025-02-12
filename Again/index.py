@@ -1,34 +1,13 @@
 import sys
+import random
+from font import display_banner  # Importing display_banner from font.py
 from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
-import random
 
-# Function to display the banner with color
-def display_banner():
-    # ANSI escape codes for colors
-    colors = ["\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m", "\033[36m"]
-    reset = "\033[0m"  # Reset color
-    green = "\033[32m"  # Green color
-    color = random.choice(colors)  # Pick a random color
-
-    print(f"{color}")
-    print("""
-     ░█████╗░░██████╗░░█████╗░██╗███╗░░██╗░█████╗░
-     ██╔══██╗██╔════╝░██╔══██╗██║████╗░██║██╔══██╗
-     ███████║██║░░██╗░███████║██║██╔██╗██║╚═╝███╔╝
-     ██╔══██║██║░░╚██╗██╔══██║██║██║╚████║░░░╚══╝░
-     ██║░░██║╚██████╔╝██║░░██║██║██║░╚███║░░░██╗░░
-     ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░
-                   """)
-    # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.0.7 by c01d43am{reset}"
-    print("\t\thttps://github.com/c01d43am")
-    print(f"\n{version}\n")
-
-# Main script logics
+# Main script logic
 def main():
-    display_banner()  # Display the banner
+    display_banner()  # Call the function from font.py
     print("Starting menu...")
 
     try:
@@ -45,7 +24,7 @@ def main():
             elif choice == "2":
                 subdomain_submenu()  # Enter Domain submenu
             elif choice == "3":
-                exploit_tool_menu()  # Enter Domain submenu
+                exploit_tool_menu()  # Enter Exploits submenu
             elif choice == "4":
                 print("Exiting. Goodbye!")
                 sys.exit(0)
