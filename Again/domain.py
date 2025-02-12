@@ -52,7 +52,7 @@ def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt")
 def is_gobuster_installed():
     """Check if gobuster is installed."""
     try:
-        result = subprocess.run(["gobuster", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        result = subprocess.run(["gobuster", "-v"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         return result.returncode == 0
     except (FileNotFoundError, subprocess.CalledProcessError):
         return False
