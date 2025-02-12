@@ -4,28 +4,6 @@ from font import display_banner  # Importing display_banner from font.py
 from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
-import subprocess
-
-def start_tool():
-    try:
-        # Your tool execution logic here
-        pass
-    except KeyboardInterrupt:
-        print("\n[!] KeyboardInterrupt detected. Exiting gracefully...")
-import subprocess
-
-def start_tool():
-    try:
-        # Tool execution logic
-        run_index()  # Only run this if not interrupted
-    except KeyboardInterrupt:
-        print("\n[!] Exiting gracefully...")
-
-def run_index():
-    try:
-        subprocess.run(["python3", "Again/index.py"])
-    except KeyboardInterrupt:
-        print("\n[!] Exiting without restarting index.py...")
 
 # Main script logic
 def main():
