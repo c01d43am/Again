@@ -4,7 +4,6 @@
 # The user can choose to run Dirb, Nmap, Nikto, SSLscan, or Feroxbuster scans on a subdomain.
 import os
 import subprocess
-import shutil
 from utils import install_tool
 
 #-------------------------------------------------------------------------------------------------------------

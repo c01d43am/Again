@@ -4,7 +4,7 @@ from font import display_banner  # Importing display_banner from font.py
 from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
-from vulnscan import vulunscan_menu
+from vulnscan import Vulunscan_menu
 # Main script logic
 def main():
     display_banner()  # Call the function from font.py
@@ -25,7 +25,7 @@ def main():
             elif choice == "2":
                 subdomain_submenu()  # Enter Domain submenu
             elif choice == "3":
-                vulunscan_menu()  # vulnerability Scanning submenu
+                Vulunscan_menu()  # vulnerability Scanning submenu
             elif choice == "4":
                 exploit_tool_menu()  # Exploits submenu
             elif choice == "5":

@@ -1,12 +1,4 @@
 import subprocess
-import random
-from colorama import Fore, Style, init
-
-init(autoreset=True)
-
-def get_random_color():
-    colors = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
-    return random.choice(colors)
 
 def install_tool(tool_name):
     """Checks if a tool is installed and installs it if not found."""
@@ -33,8 +25,8 @@ def run_nikto_scan(subdomain):
 def Vulunscan_menu():
     while True:
         print("\nNikto Automation Menu:")
-        print(get_random_color() + "1. Run Nikto Scan")
-        print(get_random_color() + "2. Exit")
+        print( "1. Run Nikto Scan")
+        print( "2. Exit")
         
         choice = input("Enter your choice: ")
         
