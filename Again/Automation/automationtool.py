@@ -4,7 +4,7 @@
 # The start_armitage function automates Armitage by starting the Armitage GUI.
 import subprocess
 import os
-from utils import install_tool
+from Again.Support.utils import install_tool
 
 # Function to automate the selected tool
 def automate_tool(tool_choice):

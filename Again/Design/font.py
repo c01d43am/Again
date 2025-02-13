@@ -67,7 +67,7 @@ banners = [
     """
 ]
 
-def display_banner():
+def Font_banner():
     # ANSI escape codes for colors
     colors = ["\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m", "\033[36m"]
     reset = "\033[0m"  # Reset color
@@ -84,4 +84,4 @@ def display_banner():
 
 # Call function for testing
 if __name__ == "__main__":
-    display_banner()
+    Font_banner()

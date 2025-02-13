@@ -1,13 +1,14 @@
 import sys
 import random
-from font import display_banner  # Importing display_banner from font.py
-from automationtool import automation_submenu
-from domain import subdomain_submenu
-from exploit import exploit_tool_menu
-from vulnscan import Vulunscan_menu
+from Again.Design.font import Font_banner  # Importing display_banner from font.py
+from Again.Automation.automationtool import automation_submenu
+from Again.DomainScan.subdomain_menu import subdomain_submenu
+from Again.DBMSInjection.exploit import exploit_tool_menu
+from Again.VulunScan.vulnscan import Vulunscan_menu
+
 # Main script logic
 def main():
-    display_banner()  # Call the function from font.py
+    Font_banner()  # Call the function from font.py
     print("Starting menu...")
 
     try:
