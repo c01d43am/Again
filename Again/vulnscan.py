@@ -28,7 +28,7 @@ def run_nikto_scan(subdomain):#subdomain is the target
 #-----------------------------------------------------------------------------------------------
 def run_skipfish_scan(subdomain):#subdomain is the target
     """Run Skipfish scan for vulnerabilities."""
-    check_and_install_nikto()
+    check_and_install_skipfish()
     print(f"\nRunning Skipfish scan for {subdomain}...")
     try:
         subprocess.run(f"skipfish -o scan_results {subdomain}", shell=True, check=True)
