@@ -4,7 +4,7 @@ from font import display_banner  # Importing display_banner from font.py
 from automationtool import automation_submenu
 from domain import subdomain_submenu
 from exploit import exploit_tool_menu
-
+from vulnscan import vulunscan_menu
 # Main script logic
 def main():
     display_banner()  # Call the function from font.py
@@ -15,17 +15,20 @@ def main():
             print("\nSelect a task to perform:")
             print("1. Automation Tool")
             print("2. Domain")
-            print("3. Exploits")
-            print("4. Exit\n")
+            print("3. Vulnerability Scanning")
+            print("4. Exploits")
+            print("5. Exit\n")
 
-            choice = input("Enter your choice [1-4]: ")
+            choice = input("Enter your choice [1-5]: ")
             if choice == "1":
                 automation_submenu()  # Enter Automation Category submenu
             elif choice == "2":
                 subdomain_submenu()  # Enter Domain submenu
             elif choice == "3":
-                exploit_tool_menu()  # Enter Exploits submenu
+                vulunscan_menu()  # vulnerability Scanning submenu
             elif choice == "4":
+                exploit_tool_menu()  # Exploits submenu
+            elif choice == "5":
                 print("Exiting. Goodbye!")
                 sys.exit(0)
             else:

@@ -30,7 +30,7 @@ def run_nikto_scan(subdomain):
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 
-def main():
+def Vulunscan_menu():
     while True:
         print("\nNikto Automation Menu:")
         print(get_random_color() + "1. Run Nikto Scan")
@@ -48,4 +48,4 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
-    main()
+    Vulunscan_menu()
