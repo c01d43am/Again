@@ -34,7 +34,7 @@ def run_skipfish_scan(subdomain):#subdomain is the target
         subprocess.run(f"skipfish -o scan_results {subdomain}", shell=True, check=True)
         print(f"Skipfish scan completed for {subdomain}.Results saved in scan_results folder.")
     except subprocess.CalledProcessError as e:
-        print(f"Failed to run Nikto scan for {subdomain}: {e}")
+        print(f"Failed to run Skipfish scan for {subdomain}: {e}")
 #-----------------------------------------------------------------------------------------------
 def Vulunscan_menu():#menu for the user to choose the tool
     while True:
