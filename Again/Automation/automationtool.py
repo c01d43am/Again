@@ -6,10 +6,9 @@ import subprocess
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
-from Again.Support.utils import install_tool
+from Support.utils import install_tool
 
 # Function to automate the selected tool
 def automate_tool(tool_choice):

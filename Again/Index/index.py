@@ -2,8 +2,8 @@ import sys
 import os
 import random
 
-# Add the parent directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the parent directory of "index" (which is "Again") to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Design.font import Font_banner  # Importing display_banner from font.py
 from Automation.automationtool import automation_submenu
