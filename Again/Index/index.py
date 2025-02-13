@@ -1,10 +1,15 @@
 import sys
+import os
 import random
-from Again.Design.font import Font_banner  # Importing display_banner from font.py
-from Again.Automation.automationtool import automation_submenu
-from Again.DomainScan.subdomain_menu import subdomain_submenu
-from Again.DBMSInjection.exploit import exploit_tool_menu
-from Again.VulunScan.vulnscan import Vulunscan_menu
+
+# Add the parent directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from Design.font import Font_banner  # Importing display_banner from font.py
+from Automation.automationtool import automation_submenu
+from DomainScan.subdomain_menu import subdomain_submenu
+from DBMSInjection.exploit import exploit_tool_menu
+from VulunScan.vulnscan import Vulunscan_menu
 
 # Main script logic
 def main():

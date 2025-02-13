@@ -4,6 +4,11 @@
 # The start_armitage function automates Armitage by starting the Armitage GUI.
 import subprocess
 import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 from Again.Support.utils import install_tool
 
 # Function to automate the selected tool
