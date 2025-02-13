@@ -26,15 +26,55 @@ def run_nikto_scan(subdomain):#subdomain is the target nikto is scanning
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 #-----------------------------------------------------------------------------------------------
-def run_skipfish_scan(subdomain):#subdomain is the target skipfish is scanning
+def run_skipfish_scan(subdomain, options):
     """Run Skipfish scan for vulnerabilities."""
     check_and_install_skipfish()
-    print(f"\nRunning Skipfish scan for {subdomain}...")
+    print(f"\nRunning Skipfish scan for {subdomain} with options: {options}...")
     try:
-        subprocess.run(f"skipfish -o scan_results {subdomain}", shell=True, check=True)
-        print(f"Skipfish scan completed for {subdomain}.Results saved in scan_results folder.")
+        subprocess.run(f"skipfish {options} -o output {subdomain}", shell=True, check=True)
+        print(f"Skipfish scan completed for {subdomain}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Skipfish scan for {subdomain}: {e}")
+
+def skipfish_menu():
+    """Menu to select Skipfish scanning options."""
+    print("\nSelect Skipfish scan mode:")
+    print("1. Basic Scan")
+    print("2. Authenticated Scan (Basic Auth)")
+    print("3. Scan with Proxy")
+    print("4. Rate-Limited Scan")
+    print("5. Custom Wordlist Scan")
+    print("6. Ignore URLs with Specific Keywords")
+    print("7. Back to Main Menu")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        options = ""
+    elif choice == "2":
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        options = f"-A {username}:{password}"
+    elif choice == "3":
+        proxy = input("Enter proxy (e.g., http://127.0.0.1:8080): ")
+        options = f"-J {proxy}"
+    elif choice == "4":
+        rate = input("Enter requests per second (e.g., 2): ")
+        options = f"-r {rate}"
+    elif choice == "5":
+        wordlist = input("Enter path to custom wordlist: ")
+        options = f"-W {wordlist}"
+    elif choice == "6":
+        keyword = input("Enter keyword to ignore (e.g., logout): ")
+        options = f"-X {keyword}"
+    elif choice == "7":
+        return
+    else:
+        print("Invalid choice. Returning to menu.")
+        return
+
+    subdomain = input("Enter the subdomain to scan with Skipfish: ")
+    run_skipfish_scan(subdomain, options)
 #-----------------------------------------------------------------------------------------------
 def Vulunscan_menu():#menu for the user to choose the tool
     while True:
@@ -49,8 +89,7 @@ def Vulunscan_menu():#menu for the user to choose the tool
             subdomain = input("Enter the subdomain to scan with Nikto: ")
             run_nikto_scan(subdomain)
         elif choice == "2":
-            subdomain = input("Enter the subdomain to scan with Skipfish: {https/http} ")
-            run_skipfish_scan(subdomain)
+            skipfish_menu()(subdomain)
         elif choice == "3":
             print("Exiting...")
             break
