@@ -16,7 +16,7 @@ def check_and_install_skipfish():#skipfish is a tool for web application securit
     """Checks if Skipfish is installed. Installs it if not found."""
     install_tool("skipfish")
 #-----------------------------------------------------------------------------------------------
-def run_nikto_scan(subdomain):#subdomain is the target
+def run_nikto_scan(subdomain):#subdomain is the target nikto is scanning
     """Run Nikto scan for vulnerabilities."""
     check_and_install_nikto()
     print(f"\nRunning Nikto scan for {subdomain}...")
@@ -26,7 +26,7 @@ def run_nikto_scan(subdomain):#subdomain is the target
     except subprocess.CalledProcessError as e:
         print(f"Failed to run Nikto scan for {subdomain}: {e}")
 #-----------------------------------------------------------------------------------------------
-def run_skipfish_scan(subdomain):#subdomain is the target
+def run_skipfish_scan(subdomain):#subdomain is the target skipfish is scanning
     """Run Skipfish scan for vulnerabilities."""
     check_and_install_skipfish()
     print(f"\nRunning Skipfish scan for {subdomain}...")
@@ -49,7 +49,7 @@ def Vulunscan_menu():#menu for the user to choose the tool
             subdomain = input("Enter the subdomain to scan with Nikto: ")
             run_nikto_scan(subdomain)
         elif choice == "2":
-            subdomain = input("Enter the subdomain to scan with Skipfish: ")
+            subdomain = input("Enter the subdomain to scan with Skipfish: {https/http} ")
             run_skipfish_scan(subdomain)
         elif choice == "3":
             print("Exiting...")
