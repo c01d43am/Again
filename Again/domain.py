@@ -23,11 +23,6 @@ def check_and_install_dirb():
     install_tool("dirb")
 
 #-------------------------------------------------------------------------------------------------------------
-def check_and_install_nikto():
-    """Checks if Nikto is installed. Installs it if not found."""
-    install_tool("nikto")
-
-#-------------------------------------------------------------------------------------------------------------
 def is_feroxbuster_installed():
     """Check if feroxbuster is installed."""
     try:
@@ -87,17 +82,6 @@ def run_nmap_scan(subdomain, scan_type="full"):
         print(f"Failed to run Nmap scan for {subdomain}: {e}")
 
 #-------------------------------------------------------------------------------------------------------------
-def run_nikto_scan(subdomain):
-    """Run Nikto scan for vulnerabilities."""
-    check_and_install_nikto()
-    print(f"\nRunning Nikto scan for {subdomain}...")
-    try:
-        subprocess.run(f"nikto -h {subdomain}", shell=True, check=True)
-        print(f"Nikto scan completed for {subdomain}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run Nikto scan for {subdomain}: {e}")
-
-#-------------------------------------------------------------------------------------------------------------
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
     check_and_install_sslscan()
@@ -126,12 +110,11 @@ def subdomain_submenu():
         print("\nSubdomain Submenu:")
         print("1. Run Dirb Scan")
         print("2. Run Nmap Scan")
-        print("3. Run Nikto Scan")
-        print("4. Run SSLscan")
-        print("5. Run Feroxbuster")
-        print("6. Run Gobuster")
-        print("7. Exit")
-        choice = input("Please choose an option (1-7): ")
+        print("3. Run SSLscan")
+        print("4. Run Feroxbuster")
+        print("5. Run Gobuster")
+        print("6. Exit")
+        choice = input("Please choose an option (1-6): ")
         
         if choice == "1":
             subdomain = input("Enter the subdomain to scan with Dirb: ")
@@ -139,20 +122,17 @@ def subdomain_submenu():
         elif choice == "2":
             subdomain = input("Enter the subdomain to scan with Nmap: ")
             scan_type = input("Enter scan type (fast/full): ")
-            run_nmap_scan(subdomain, scan_type)
+            run_nmap_scan(subdomain, scan_type)  
         elif choice == "3":
-            subdomain = input("Enter the subdomain to scan with Nikto: ")
-            run_nikto_scan(subdomain)
-        elif choice == "4":
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
             run_sslscan(subdomain)
-        elif choice == "5":
+        elif choice == "4":
             subdomain = input("Enter the subdomain to scan with Feroxbuster: ")
             run_feroxbuster(subdomain)
-        elif choice == "6":
+        elif choice == "5":
             subdomain = input("Enter the subdomain to scan with Gobuster: ")
             run_gobuster(subdomain)
-        elif choice == "7":
+        elif choice == "6":
             print("Exiting the vulnerability scan submenu...")
             break
         else:
@@ -165,7 +145,6 @@ def main_menu():
     check_and_install_nmap()
     check_and_install_sslscan()
     check_and_install_dirb()
-    check_and_install_nikto()
     if not is_feroxbuster_installed():
         install_feroxbuster()
     if not is_gobuster_installed():
