@@ -3,7 +3,12 @@ from Again.Support.utils import install_tool
 
 def check_and_install_sslscan():
     """Checks if sslscan is installed. Installs it if not found."""
-    install_tool("sslscan")
+    try:
+        subprocess.run(["sslscan", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("sslscan is already installed.")
+    except subprocess.CalledProcessError:
+        print("sslscan not found. Installing...")
+        install_tool("sslscan")
 
 def run_sslscan(subdomain):
     """Run sslscan to check for SSL/TLS vulnerabilities."""
