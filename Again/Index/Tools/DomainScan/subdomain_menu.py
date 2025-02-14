@@ -1,8 +1,8 @@
-from sslscan_tool import check_and_install_sslscan, run_sslscan
-from nmap_tool import check_and_install_nmap
-from feroxbuster_tool import is_feroxbuster_installed
-from gobuster_tool import is_tool_installed
-from dirb_tool import is_dirbuster_installed
+from Tools.DomainScan.sslscan_tool import check_and_install_sslscan, run_sslscan
+from Tools.DomainScan.nmap_tool import check_and_install_nmap
+from Tools.DomainScan.feroxbuster_tool import is_feroxbuster_installed
+from Tools.DomainScan.gobuster_tool import is_tool_installed
+from Tools.DomainScan.dirb_tool import is_dirbuster_installed
 
 def subdomain_submenu():
     """Submenu to handle subdomain-related tasks."""
