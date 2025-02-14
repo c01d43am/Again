@@ -12,11 +12,14 @@ from Tools.DomainScan.subdomain_menu import subdomain_submenu
 from Tools.DBMSInjection.exploit import exploit_tool_menu
 from Tools.VulunScan.vulnscan import Vulunscan_menu
 
-# Function to execute shell scripts
+# Function to set execute permissions and run shell scripts
 def run_script(script_name):
     script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'checker', script_name))
     
     if os.path.isfile(script_path):
+        print(f"\n[+] Ensuring execute permissions for {script_name}...")
+        subprocess.run(["chmod", "+x", script_path], check=True)  # Set execute permission
+        
         print(f"\n[+] Running {script_name}...")
         try:
             subprocess.run(["bash", script_path], check=True)
@@ -38,7 +41,7 @@ def updates_check_menu():
         if choice == "1":
             run_script("install.sh")
         elif choice == "2":
-            run_script("uninstall.sh")
+            run_script("uninstall_tools.sh")
         elif choice == "3":
             run_script("check_installation.sh")
         elif choice == "4":
