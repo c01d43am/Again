@@ -2,21 +2,31 @@ import os
 import subprocess
 
 def is_dirbuster_installed():
-    """Check if DirBuster is installed."""
-    return os.path.exists("/usr/share/dirbuster/DirBuster.jar")
+    """Check if DirBuster is installed and if the JAR file exists."""
+    return os.path.exists("/usr/share/dirbuster/dirbuster.jar")  # Corrected path
 
 def install_dirbuster():
     """Install DirBuster if not installed."""
     print("[+] Installing DirBuster...")
     os.system("sudo apt update && sudo apt install -y dirbuster")
+    
+    # Verify installation after installing
+    if not is_dirbuster_installed():
+        print("[-] DirBuster installation failed. Please check your package manager.")
+        return False
+    
+    return True
 
 def run_dirbuster(target_url, wordlist="/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt", threads=10, file_ext="php,html,txt"):
     """Run DirBuster with specified parameters."""
     if not is_dirbuster_installed():
-        install_dirbuster()
+        if not install_dirbuster():
+            print("[-] DirBuster installation failed. Cannot proceed.")
+            return
     
+    dirbuster_path = "/usr/share/dirbuster/dirbuster.jar"  # Corrected path
     command = (
-        f"java -jar /usr/share/dirbuster/DirBuster.jar -u {target_url} "
+        f"java -jar {dirbuster_path} -u {target_url} "
         f"-w {wordlist} -t {threads} -e {file_ext}"
     )
     
