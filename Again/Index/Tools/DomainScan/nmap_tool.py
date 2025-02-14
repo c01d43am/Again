@@ -35,25 +35,25 @@ def nmap_host_discovery():
     ip = input("Enter target IP or IP range: ")
     
     if choice == "1":
-        command = f"nmap -sn {ip}"
+        command = f"nmap -Pn -sn {ip}"
     elif choice == "2":
-        command = f"nmap -sn {ip} --send-ip"
+        command = f"nmap -Pn -sn {ip} --send-ip"
     elif choice == "3":
         ips = input("Enter additional IPs separated by space: ")
-        command = f"nmap -sn {ip} {ips}"
+        command = f"nmap -Pn -sn {ip} {ips}"
     elif choice == "4":
         port = input("Enter port number: ")
-        command = f"nmap -sn -PS{port} {ip}"
+        command = f"nmap -Pn -sn -PS{port} {ip}"
     elif choice == "5":
-        command = f"nmap -sn -PA {ip}"
+        command = f"nmap -Pn -sn -PA {ip}"
     elif choice == "6":
-        command = f"nmap -sn -PE {ip} --send-ip"
+        command = f"nmap -Pn -sn -PE {ip} --send-ip"
     elif choice == "7":
-        command = f"nmap -sn -V -T4 {ip}"
+        command = f"nmap -Pn -sn -V -T4 {ip}"
     elif choice == "8":
         tcp_port = input("Enter TCP port: ")
         udp_port = input("Enter UDP port: ")
-        command = f"nmap -sn -PS{tcp_port} -PU{udp_port} -T4 {ip}"
+        command = f"nmap -Pn -sn -PS{tcp_port} -PU{udp_port} -T4 {ip}"
     elif choice == "9":
         command = f"nmap -Pn -F {ip}"
     elif choice == "10":
@@ -67,7 +67,7 @@ def nmap_host_discovery():
         command = f"nmap -Pn -sT {ip}"
     elif choice == "14":
         port = input("Enter port number: ")
-        command = f"nmap -sU -p{port} {ip}"
+        command = f"nmap -Pn -sU -p{port} {ip}"
     else:
         print("Invalid choice. Exiting...")
         return
