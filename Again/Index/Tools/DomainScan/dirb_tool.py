@@ -1,6 +1,7 @@
 import subprocess
 import os
 import sys
+import re
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -27,12 +28,18 @@ def dirb_submenu():
     while True:
         print("\nDirb Automation Options:")
         print("1. Run Dirb Scan")
-        print("2. Back to Menu")
+        print("2. Back to Automation Menu")
         
         choice = input("Enter your choice [1-2]: ")
         
         if choice == "1":
-            target_url = input("Enter target URL {https/http}: ")
+            while True:
+                target_url = input("Enter target URL (must start with http:// or https://): ")
+                if re.match(r"^https?://", target_url):
+                    break
+                else:
+                    print("Invalid URL. Please enter a valid URL starting with http:// or https://")
+            
             use_wordlist = input("Do you want to specify a wordlist? (y/n): ").strip().lower()
             
             if use_wordlist == "y":
