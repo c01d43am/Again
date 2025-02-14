@@ -4,33 +4,48 @@
 
 ## Overview
 
-`Again` is a Python-based tool designed for penetration testers and security enthusiasts. It provides a modular menu-driven interface to automate tasks such as vulnerability scanning, subdomain enumeration, and exploit execution. This tool simplifies the workflow for ethical hacking and automates common security operations.
+`Again` is a Python-based penetration testing tool designed for security professionals and ethical hackers. It provides a modular menu-driven interface for automating tasks such as vulnerability scanning, reconnaissance, and exploit execution. This tool simplifies the workflow by integrating multiple security tools into a single framework.
 
 ## Features
 
-- **Automation**: Perform vulnerability scans and other security tasks efficiently.
-- **Domain Enumeration**: Identify subdomains for target websites.
-- **Exploit Tools**: Test for known exploits and vulnerabilities.
-- **Extensibility**: Easily customizable and extendable to include new modules and tools.
+- **Automation:** Automate security tasks such as vulnerability scanning.
+- **Reconnaissance:** Perform domain enumeration and content discovery.
+- **Exploits:** Test for known vulnerabilities using automated tools.
+- **Extensibility:** Easily customizable to include new modules and tools.
+- **Auto-Update:** Fetches the latest changes from the repository automatically.
 
 ## Modules
 
-1. **Automation Tool**  
-   Automates vulnerability scanning with tools like Nessus, Armitage, and Nikto.
+### 1. Automation Tool  
+Automates security scanning with the following tools:
+- **Nessus** (Vulnerability Scanning)
+- **Armitage** (Metasploit GUI)
+- **Akto** (API Security Testing)
 
-2. **Domain**  
-   Performs subdomain enumeration and related tasks.
+### 2. Domain (Recon & Scanning)  
+Performs reconnaissance and scanning using:
+- **Dirb** (Directory Brute Force)
+- **SSLScan** (SSL/TLS Security Check)
+- **Feroxbuster** (Content Discovery)
+- **Gobuster** (Subdomain & Directory Enumeration)
+- **Nmap** (Network Scanning)
 
-3. **Exploits**  
-   Leverages tools for exploiting known vulnerabilities.
+### 3. Vulnerability Scanning  
+Detects vulnerabilities using:
+- **Nikto** (Web Server Security Scan)
+- **Skipfish** (Automated Web Vulnerability Scan)
+
+### 4. Exploits  
+Tests for known exploits using:
+- **SQLMap** (SQL Injection Testing)
 
 ## Prerequisites
 
-Before running this tool, ensure the following are installed:
+Ensure the following dependencies are installed before running `Again`:
 
 - **Python 3.8+**
-- `git` for fetching updates.
-- Supported third-party tools (e.g. Nessus, Nikto).
+- `git` (for fetching updates)
+- Third-party security tools (e.g., Nessus, Nikto, Armitage, etc.)
 
 ## Installation
 
@@ -52,27 +67,19 @@ Before running this tool, ensure the following are installed:
 
 ## Usage
 
-1. Run the script:
+1. Execute the script:
    ```bash
    python again.py
    ```
 
-2. Select an option from the menu:
+2. Choose an option from the interactive menu:
    - **1**: Automation Tool
-   - **2**: Domain
-   - **3**: Exploits
-   - **4**: Exit
+   - **2**: Domain Recon & Scanning
+   - **3**: Vulnerability Scanning
+   - **4**: Exploits
+   - **5**: Exit
 
-## How It Works
-
-`Again` provides a modular structure:
-- The **Automation** module installs and starts tools like Nessus, etc.
-- The **Domain** module focuses on subdomain enumeration.
-- The **Exploits** module integrates various exploit scripts.
-
-The script also includes an **auto-update feature**, pulling the latest changes from the repository automatically on execution.
-
-## Example
+## Example Output
 
 ```plaintext
 ░█████╗░░██████╗░░█████╗░██╗███╗░░██╗░█████╗░
@@ -84,7 +91,7 @@ The script also includes an **auto-update feature**, pulling the latest changes 
 
 https://github.com/c01d43am
 
-v0.0.0 by c01d43am
+v1.0.0 by c01d43am
 ```
 
 ## Contributing
@@ -100,5 +107,5 @@ This project is licensed under the **GNU General Public License v2.0**. See the 
 
 ## Disclaimer
 
-This tool is intended for educational purposes and ethical hacking only. The author is not responsible for any misuse.
+This tool is intended for educational and ethical hacking purposes only. The author is not responsible for any misuse or illegal activities conducted using this tool.
 
