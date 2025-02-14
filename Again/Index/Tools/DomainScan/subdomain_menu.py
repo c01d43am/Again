@@ -1,7 +1,7 @@
 from Tools.DomainScan.sslscan_tool import run_sslscan
 from Tools.DomainScan.nmap_tool import check_and_install_nmap
 from Tools.DomainScan.feroxbuster_tool import feroxbuster_menu  # Updated to call the menu function
-from Tools.DomainScan.gobuster_tool import is_tool_installed
+from Tools.DomainScan.gobuster_tool import gobuster_menu
 from Tools.DomainScan.dirb_tool import dirb_submenu  # Import the dirb submenu
 
 def subdomain_submenu():
@@ -25,7 +25,7 @@ def subdomain_submenu():
             feroxbuster_menu()  # Call the Feroxbuster menu
         elif choice == "4":
             subdomain = input("Enter the subdomain to scan with Gobuster: ")
-            is_tool_installed()
+            gobuster_menu()
         elif choice == "5":
             check_and_install_nmap()
         elif choice == "6":
