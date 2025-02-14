@@ -1,4 +1,4 @@
-from Tools.DomainScan.sslscan_tool import check_and_install_sslscan
+from Tools.DomainScan.sslscan_tool import run_sslscan
 from Tools.DomainScan.nmap_tool import check_and_install_nmap
 from Tools.DomainScan.feroxbuster_tool import is_feroxbuster_installed
 from Tools.DomainScan.gobuster_tool import is_tool_installed
@@ -20,7 +20,7 @@ def subdomain_submenu():
             dirb_submenu()  # Call dirb with user input
         elif choice == "2":
             subdomain = input("Enter the subdomain to scan with SSLscan: ")
-            check_and_install_sslscan()
+            run_sslscan(subdomain)
         elif choice == "3":
             subdomain = input("Enter the subdomain to scan with Feroxbuster: ")
             is_feroxbuster_installed()
