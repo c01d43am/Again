@@ -27,12 +27,12 @@ def dirb_submenu():
     while True:
         print("\nDirb Automation Options:")
         print("1. Run Dirb Scan")
-        print("2. Back to Automation Menu")
+        print("2. Back to Menu")
         
         choice = input("Enter your choice [1-2]: ")
         
         if choice == "1":
-            target_url = input("Enter target URL: ")
+            target_url = input("Enter target URL {https/http}: ")
             use_wordlist = input("Do you want to specify a wordlist? (y/n): ").strip().lower()
             
             if use_wordlist == "y":
