@@ -19,12 +19,10 @@ def subdomain_submenu():
         if choice == "1":
             dirb_submenu()  # Call dirb submenu
         elif choice == "2":
-            subdomain = input("Enter the subdomain to scan with SSLscan: ")
-            run_sslscan(subdomain)
+            run_sslscan()
         elif choice == "3":
             feroxbuster_menu()  # Call the Feroxbuster menu
         elif choice == "4":
-            subdomain = input("Enter the subdomain to scan with Gobuster: ")
             gobuster_menu()
         elif choice == "5":
             check_and_install_nmap()
