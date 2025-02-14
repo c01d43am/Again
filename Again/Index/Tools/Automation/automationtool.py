@@ -1,14 +1,15 @@
 # Description: This file contains the functions to automate the selected tool.
 # The automate_tool function takes the user's choice and calls the appropriate function to automate the selected tool.
-# The start_nessus function automates Nessus by checking the service status, starting the service if not running, updating Nessus, and displaying the server status.
-# The start_armitage function automates Armitage by starting the Armitage GUI.
+# Each function ensures the tool is installed before running.
+
 import subprocess
 import os
 import sys
+import shutil
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Again.Index.Tools.Support.install_tool import install_tool
+from ..Support.install_tool import install_tool
 
 # Function to automate the selected tool
 def automate_tool(tool_choice):
@@ -21,19 +22,18 @@ def automate_tool(tool_choice):
     else:
         print("Invalid choice, please try again.")
 
-# Nessus Automation with subcategories
+# Nessus Automation
 def start_nessus():
     print("\nAutomating Nessus...\n")
-    install_tool("nessusd", "nessus")  # Ensure Nessus is installed
+    
+    if not shutil.which("nessusd"):
+        print("Nessus not found. Installing...\n")
+        install_tool("nessusd", "nessus")  # Ensure Nessus is installed
+    
     try:
-        # Check if Nessus service is running
-        service_status = subprocess.run("systemctl is-active nessusd", shell=True, capture_output=True)
-        if service_status.returncode != 0:
-            print("Starting Nessus service...")
-            subprocess.run(["sudo", "systemctl", "start", "nessusd"], check=True)
-            print("Nessus service started. Access it via https://127.0.0.1:8834")
-        else:
-            print("Nessus service is already running. Access it via https://127.0.0.1:8834")
+        # Start Nessus service
+        subprocess.run(["sudo", "systemctl", "start", "nessusd"], check=True)
+        print("Nessus service started. Access it via https://127.0.0.1:8834")
 
         # Check Nessus server status
         server_status = subprocess.run(["curl", "-k", "https://127.0.0.1:8834/server/status"], capture_output=True, text=True)
@@ -46,20 +46,25 @@ def start_nessus():
         print("Updating Nessus...")
         subprocess.run(["sudo", "/opt/nessus/sbin/nessuscli", "update"], check=True)
         print("Nessus has been updated.")
+    
     except subprocess.CalledProcessError as e:
         print(f"Error while starting or updating Nessus: {e}")
 
-# Armitage Automation with subcategories
+# Armitage Automation
 def start_armitage():
     print("\nAutomating Armitage...\n")
-    install_tool("armitage", "armitage")  # Ensure Armitage is installed
+    
+    if not shutil.which("armitage"):
+        print("Armitage not found. Installing...\n")
+        install_tool("armitage", "armitage")  # Ensure Armitage is installed
+
     try:
         subprocess.Popen(["armitage"])
         print("Armitage has been started. Please wait for the GUI to appear.\n")
     except Exception as e:
         print(f"Error starting Armitage: {e}")
 
-# Akto Automation with subcategories
+# Akto Automation
 def start_akto():
     print("\nAutomating Akto...\n")
     akto_path = os.path.expanduser("~/akto")  # Ensure ~ is expanded correctly

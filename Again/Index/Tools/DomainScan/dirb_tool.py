@@ -5,7 +5,7 @@ import re
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Add parent directory to path so we can import utils
 
-from Again.Index.Tools.Support.install_tool import install_tool # Import the install_tool function from the utils module
+from ..Support.install_tool import install_tool # Import the install_tool function from the utils module
 
 # Function to automate Dirb
 def start_dirb(target_url, wordlist=None, threads=10, file_ext="php,html,txt", ignore_403=False, save_output=False, proxy=None, user_agent=None, cookies=None, auth=None):
