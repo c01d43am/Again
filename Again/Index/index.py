@@ -13,8 +13,8 @@ from Tools.DBMSInjection.exploit import exploit_tool_menu
 from Tools.VulunScan.vulnscan import Vulunscan_menu
 
 # Function to set execute permissions and run shell scripts
-def run_script(script_name):
-    script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'checker', script_name))
+def run_script(script_name): # Pass the script name as an argument
+    script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Checker', script_name)) # Get the script path
     
     if os.path.isfile(script_path):
         print(f"\n[+] Ensuring execute permissions for {script_name}...")
