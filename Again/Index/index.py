@@ -3,13 +3,13 @@ import os
 import random
 
 # Add the parent directory of "index" (which is "Again") to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Tools')))
 
-from Design.font import Font_banner  # Importing display_banner from font.py
-from Automation.automationtool import automation_submenu
-from DomainScan.subdomain_menu import subdomain_submenu
-from DBMSInjection.exploit import exploit_tool_menu
-from VulunScan.vulnscan import Vulunscan_menu
+from Tools.Design.font import Font_banner  # Importing display_banner from font.py
+from Tools.Automation.automationtool import automation_submenu
+from Tools.DomainScan.subdomain_menu import subdomain_submenu
+from Tools.DBMSInjection.exploit import exploit_tool_menu
+from Tools.VulunScan.vulnscan import Vulunscan_menu
 
 # Main script logic
 def main():

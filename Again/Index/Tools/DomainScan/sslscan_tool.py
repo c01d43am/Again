@@ -1,5 +1,5 @@
 import subprocess
-from Again.Support.utils import install_tool
+from Tools.Support.utils import install_tool
 
 def check_and_install_sslscan():
     """Checks if sslscan is installed. Installs it if not found."""
