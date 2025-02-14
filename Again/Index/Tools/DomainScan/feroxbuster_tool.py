@@ -16,9 +16,14 @@ def install_feroxbuster():
 
 def run_feroxbuster(target_url, wordlist="/usr/share/wordlists/dirb/common.txt", filters="", recursion=False, extensions="", proxy="", threads=50, delay=0, output=""):
     """Run feroxbuster with various options."""
-    if not is_feroxbuster_installed():
-        install_feroxbuster()
     
+    # Check if feroxbuster is installed, if not, install it
+    if not is_feroxbuster_installed():
+        print("[!] Feroxbuster is not installed. Installing now...")
+        install_feroxbuster()
+    else:
+        print("[+] Feroxbuster is already installed. Running scan...")
+
     command = f"feroxbuster -u {target_url} -w {wordlist}"
     
     if filters:
@@ -60,7 +65,7 @@ def feroxbuster_menu():
         elif choice == "2":
             target_url = input("Enter target URL: ")
             wordlist = input("Enter wordlist path: ")
-            run_feroxbuster(target_url, wordlist)
+            run_feroxbuster(target_url, wordlist=wordlist)
         elif choice == "3":
             target_url = input("Enter target URL: ")
             filters = input("Enter status codes (comma-separated): ")
