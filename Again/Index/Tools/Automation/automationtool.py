@@ -8,7 +8,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Support.utils import install_tool
+from Again.Index.Tools.Support.install_tool import install_tool
 
 # Function to automate the selected tool
 def automate_tool(tool_choice):

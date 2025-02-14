@@ -4,7 +4,7 @@ import sys
 import re
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Support.utils import install_tool
+from Again.Index.Tools.Support.install_tool import install_tool
 
 def is_feroxbuster_installed():
     try:

@@ -1,7 +1,7 @@
 import os
 import subprocess
 import shutil
-from Support.utils import install_tool
+from Again.Index.Tools.Support.install_tool import install_tool
 
 def run_gobuster(mode, target, wordlist, additional_args):
     """Run Gobuster with user-selected options."""
