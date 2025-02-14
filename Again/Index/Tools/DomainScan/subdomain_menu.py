@@ -19,7 +19,8 @@ def subdomain_submenu():
         if choice == "1":
             dirb_submenu()  # Call dirb submenu
         elif choice == "2":
-            run_sslscan()   # Call the SSLscan function
+            subdomain = input("Enter the subdomain to scan: ")
+            run_sslscan(subdomain)   # Call the SSLscan function
         elif choice == "3":
             feroxbuster_menu()  # Call the Feroxbuster menu
         elif choice == "4":
