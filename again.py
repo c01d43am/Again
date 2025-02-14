@@ -6,11 +6,11 @@ import subprocess
 # Function to display a loading animation
 def loading_animation():
     animation = "|/-\\"
-    for _ in range(10):  # You can adjust the range for a longer animation
+    for _ in range(5):  # You can adjust the range for a longer animation
         for char in animation:
             sys.stdout.write(f"\rLoading... {char} ")
             sys.stdout.flush()
-            time.sleep(0.2)
+            time.sleep(0.1)
     sys.stdout.write("\rLoading... done!       \n")
     sys.stdout.flush()
 
@@ -19,15 +19,12 @@ def loading_animation():
 def exploitation_animation():
     exploit_text = [
         "Yummy...",
-        "Tasty...",
-        "I want more...",
-        "I'm full...",
-        "All systems compromised!"
+        "Exploiting...",
     ]
     for text in exploit_text:
         sys.stdout.write(f"\r{text}    ")
         sys.stdout.flush()
-        time.sleep(1)
+        time.sleep(0)
     
     print("\nExploit successful!")
 
