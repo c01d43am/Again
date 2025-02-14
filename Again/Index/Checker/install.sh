@@ -33,6 +33,27 @@ detect_package_manager() {
     fi
 }
 
+# Update and Upgrade the system
+update_system() {
+    local package_manager=$(detect_package_manager)
+    
+    echo "[+] Updating and Upgrading system..."
+    case $package_manager in
+        apt)
+            sudo apt update && sudo apt upgrade -y
+            ;;
+        pacman)
+            sudo pacman -Syu --noconfirm
+            ;;
+        brew)
+            brew update && brew upgrade
+            ;;
+        *)
+            echo "[-] No supported package manager found."
+            ;;
+    esac
+}
+
 # Install or update a tool
 install_or_update_tool() {
     local tool=$1
@@ -64,7 +85,7 @@ install_tool() {
 
     case $package_manager in
         apt)
-            sudo apt update && sudo apt install -y "$tool"
+            sudo apt install -y "$tool"
             ;;
         pacman)
             sudo pacman -Sy --noconfirm "$tool"
@@ -93,6 +114,27 @@ install_or_update_git_tool() {
     fi
 }
 
+# Remove unnecessary files and clean up
+cleanup_system() {
+    local package_manager=$(detect_package_manager)
+
+    echo "[+] Cleaning up unnecessary files..."
+    case $package_manager in
+        apt)
+            sudo apt autoremove -y && sudo apt clean
+            ;;
+        pacman)
+            sudo pacman -Rns $(pacman -Qdtq) --noconfirm
+            ;;
+        brew)
+            brew cleanup
+            ;;
+        *)
+            echo "[-] No supported package manager found for cleanup."
+            ;;
+    esac
+}
+
 # Install and update all tools
 install_and_update_all_tools() {
     echo "[+] Starting installation & update process..."
@@ -103,4 +145,8 @@ install_and_update_all_tools() {
 }
 
 # Run the script
+update_system
 install_and_update_all_tools
+cleanup_system
+
+echo "[+] System update, tool installation, and cleanup completed!"
