@@ -1,5 +1,5 @@
 from Tools.DomainScan.sslscan_tool import run_sslscan
-from Tools.DomainScan.nmap_tool import check_and_install_nmap
+from Tools.DomainScan.nmap_tool import nmap_host_discovery
 from Tools.DomainScan.feroxbuster_tool import feroxbuster_menu  # Updated to call the menu function
 from Tools.DomainScan.gobuster_tool import gobuster_menu
 from Tools.DomainScan.dirb_tool import dirb_submenu  # Import the dirb submenu
@@ -25,7 +25,7 @@ def subdomain_submenu():
         elif choice == "4":
             gobuster_menu()     # Call the Gobuster menu
         elif choice == "5":
-            check_and_install_nmap()    # Call the Nmap function
+            nmap_host_discovery()    # Call the Nmap function
         elif choice == "6":
             print("Exiting the subdomain submenu...")
             break
