@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 import random
 
 # Add the parent directory of "index" (which is "Again") to the Python path
@@ -10,6 +11,40 @@ from Tools.Automation.automationtool import automation_submenu
 from Tools.DomainScan.subdomain_menu import subdomain_submenu
 from Tools.DBMSInjection.exploit import exploit_tool_menu
 from Tools.VulunScan.vulnscan import Vulunscan_menu
+
+# Function to execute shell scripts
+def run_script(script_name):
+    script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'checker', script_name))
+    
+    if os.path.isfile(script_path):
+        print(f"\n[+] Running {script_name}...")
+        try:
+            subprocess.run(["bash", script_path], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"[!] Error executing {script_name}: {e}")
+    else:
+        print(f"[!] Error: {script_name} not found!")
+
+# Function for Updates & Check submenu
+def updates_check_menu():
+    while True:
+        print("\n[ Updates & Check Menu ]")
+        print("1. Install all tools")
+        print("2. Uninstall all tools")
+        print("3. Check installation status")
+        print("4. Back to Main Menu")
+
+        choice = input("Enter your choice [1-4]: ")
+        if choice == "1":
+            run_script("install.sh")
+        elif choice == "2":
+            run_script("uninstall.sh")
+        elif choice == "3":
+            run_script("check_installation.sh")
+        elif choice == "4":
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
 # Main script logic
 def main():
@@ -23,18 +58,21 @@ def main():
             print("2. Domain")
             print("3. Vulnerability Scanning")
             print("4. Exploits")
-            print("5. Exit\n")
+            print("5. Updates & Check")
+            print("6. Exit\n")
 
-            choice = input("Enter your choice [1-5]: ")
+            choice = input("Enter your choice [1-6]: ")
             if choice == "1":
                 automation_submenu()  # Enter Automation Category submenu
             elif choice == "2":
                 subdomain_submenu()  # Enter Domain submenu
             elif choice == "3":
-                Vulunscan_menu()  # vulnerability Scanning submenu
+                Vulunscan_menu()  # Vulnerability Scanning submenu
             elif choice == "4":
                 exploit_tool_menu()  # Exploits submenu
             elif choice == "5":
+                updates_check_menu()  # Runs Updates & Check submenu
+            elif choice == "6":
                 print("Exiting. Goodbye!")
                 sys.exit(0)
             else:
