@@ -17,7 +17,7 @@ def install_tool(tool):
 def run_gobuster(mode, target="", wordlist="", additional_args=""):
     """Run Gobuster in different modes."""
     command = f"gobuster {mode} -w {wordlist}"
-    
+
     if mode in ["dir", "dns", "vhost"] and target:
         command += f" -u {target}"
     
@@ -37,27 +37,28 @@ def gobuster_menu():
         print("4. S3 Bucket Scan (s3 mode)")
         print("5. Exit")
 
-        choice = input("Enter your choice [1-5]: ")
+        choice = input("Enter your choice [1-5]: ").strip()
 
-        if choice == "1":
-            target = input("Enter target URL (e.g., https://example.com): ").strip()
-            wordlist = input("Enter wordlist path: ").strip()
-            additional_args = input("Enter additional arguments (optional): ").strip()
-            run_gobuster("dir", target, wordlist, additional_args)
-        elif choice == "2":
-            target = input("Enter domain (e.g., example.com): ").strip()
-            wordlist = input("Enter wordlist path: ").strip()
-            additional_args = input("Enter additional arguments (optional): ").strip()
-            run_gobuster("dns", target, wordlist, additional_args)
-        elif choice == "3":
-            target = input("Enter target URL (e.g., https://example.com): ").strip()
-            wordlist = input("Enter wordlist path: ").strip()
-            additional_args = input("Enter additional arguments (optional): ").strip()
-            run_gobuster("vhost", target, wordlist, additional_args)
-        elif choice == "4":
-            wordlist = input("Enter wordlist path: ").strip()
-            additional_args = input("Enter additional arguments (optional): ").strip()
-            run_gobuster("s3", "", wordlist, additional_args)
+        if choice in ["1", "2", "3", "4"]:
+            scan_modes = {"1": "dir", "2": "dns", "3": "vhost", "4": "s3"}
+            mode = scan_modes[choice]
+
+            print("\n[+] Choose Input Mode:")
+            print("1. Manual Input")
+            print("2. Default Settings")
+            input_mode = input("Enter your choice [1-2]: ").strip()
+
+            if input_mode == "1":
+                target = input("Enter target (leave blank for S3 mode): ").strip()
+                wordlist = input("Enter wordlist path: ").strip()
+                additional_args = input("Enter additional arguments (optional): ").strip()
+            else:
+                target = "https://example.com" if mode in ["dir", "vhost"] else "example.com"
+                wordlist = "/usr/share/wordlists/dirb/common.txt"
+                additional_args = ""
+
+            run_gobuster(mode, target, wordlist, additional_args)
+
         elif choice == "5":
             print("Exiting Gobuster menu...")
             break
@@ -69,7 +70,7 @@ def main():
     if not is_tool_installed("gobuster"):
         print("[!] Gobuster is not installed. Installing now...")
         install_tool("gobuster")
-    
+
     print("[+] Gobuster is ready.")
     gobuster_menu()
 
