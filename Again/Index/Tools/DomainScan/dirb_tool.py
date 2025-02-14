@@ -7,11 +7,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Support.utils import install_tool
 
 # Function to automate Dirb
-def start_dirb(target_url, wordlist="/usr/share/wordlists/dirb/common.txt", threads=10, file_ext="php,html,txt"):
+def start_dirb(target_url, wordlist=None, threads=10, file_ext="php,html,txt"):
     print("\nAutomating Dirb...\n")
     install_tool("dirb", "dirb")  # Ensure Dirb is installed
     
-    command = f"dirb {target_url} {wordlist} -r -o dirb_results.txt"
+    if wordlist is None:
+        command = f"dirb {target_url} -r -o dirb_results.txt"
+    else:
+        command = f"dirb {target_url} {wordlist} -r -o dirb_results.txt"
     
     try:
         print(f"[+] Running Dirb on {target_url}...")
@@ -30,7 +33,13 @@ def dirb_submenu():
         
         if choice == "1":
             target_url = input("Enter target URL: ")
-            wordlist = input("Enter wordlist path (default: /usr/share/wordlists/dirb/common.txt): ") or "/usr/share/wordlists/dirb/common.txt"
+            use_wordlist = input("Do you want to specify a wordlist? (y/n): ").strip().lower()
+            
+            if use_wordlist == "y":
+                wordlist = input("Enter wordlist path: ")
+            else:
+                wordlist = None
+            
             threads = input("Enter number of threads (default: 10): ") or "10"
             file_ext = input("Enter file extensions to search (default: php,html,txt): ") or "php,html,txt"
             start_dirb(target_url, wordlist, threads, file_ext)
