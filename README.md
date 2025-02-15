@@ -1,5 +1,3 @@
----
-
 # Again Tool  
 
 **Author:** [c01d43am](https://github.com/c01d43am)  
