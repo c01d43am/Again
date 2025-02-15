@@ -1,103 +1,115 @@
-# Again Tool
+Here’s the **fixed and improved** README with better formatting and clarity:  
+
+---
+
+# Again Tool  
 
 **Author:** [c01d43am](https://github.com/c01d43am)  
 
-## Overview
+## Overview  
 
-`Again` is a Python-based penetration testing tool designed for security professionals and ethical hackers. It provides a modular menu-driven interface for automating tasks such as vulnerability scanning, reconnaissance, and exploit execution. This tool simplifies the workflow by integrating multiple security tools into a single framework.
+`Again` is a Python-based penetration testing tool designed for security professionals and ethical hackers. It provides a **modular, menu-driven interface** for automating security tasks such as **vulnerability scanning, reconnaissance, and exploit execution**. This tool simplifies workflows by integrating multiple security tools into a single framework.  
 
-## Features
+## Features  
 
-- **Automation:** Automate security tasks such as vulnerability scanning.
-- **Reconnaissance:** Perform domain enumeration and content discovery.
-- **Exploits:** Test for known vulnerabilities using automated tools.
-- **Extensibility:** Easily customizable to include new modules and tools.
-- **Auto-Update:** Fetches the latest changes from the repository automatically.
+✅ **Automation:** Automate security tasks like vulnerability scanning.  
+✅ **Reconnaissance:** Perform domain enumeration and content discovery.  
+✅ **Exploits:** Test for known vulnerabilities using automated tools.  
+✅ **Extensibility:** Easily customizable to add new tools.  
+✅ **Auto-Update:** Fetches the latest changes from the GitHub repository.  
 
-## Modules
+---
 
-### 1. Automation Tool  
-Automates security scanning with the following tools:
-- **Nessus** (Vulnerability Scanning)
-- **Armitage** (Metasploit GUI)
-- **Akto** (API Security Testing)
+## 📌 Main Menu  
 
-### 2. Domain (Recon & Scanning)  
-Performs reconnaissance and scanning using:
-- **Dirb** (Directory Brute Force)
-- **SSLScan** (SSL/TLS Security Check)
-- **Feroxbuster** (Content Discovery)
-- **Gobuster** (Subdomain & Directory Enumeration)
-- **Nmap** (Network Scanning)
+```
+1. Automation Tool
+   ├── Nessus (Vulnerability Scanner)
+   ├── Armitage (Metasploit GUI)
+   ├── Akto (API Security Testing)
+   └── Back to Main Menu
 
-### 3. Vulnerability Scanning  
-Detects vulnerabilities using:
-- **Nikto** (Web Server Security Scan)
-- **Skipfish** (Automated Web Vulnerability Scan)
+2. Domain (Recon & Scanning)
+   ├── Dirb (Directory Brute Force)
+   ├── SSLScan (SSL/TLS Security Check)
+   ├── Feroxbuster (Content Discovery)
+   ├── Gobuster (Subdomain/Directory Enumeration)
+   ├── Nmap (Network Scanning)
+   └── Exit
 
-### 4. Exploits  
-Tests for known exploits using:
-- **SQLMap** (SQL Injection Testing)
+3. Vulnerability Scanning
+   ├── Nikto (Web Server Security Scan)
+   ├── Skipfish (Automated Web Vulnerability Scan)
+   └── Exit
 
-## Prerequisites
+4. Exploits
+   ├── SQLMap (SQL Injection Testing)
+   └── Return to Main Menu
 
-Ensure the following dependencies are installed before running `Again`:
+5. Exit
+```
 
-- **Python 3.8+**
-- `git` (for fetching updates)
-- Third-party security tools (e.g., Nessus, Nikto, Armitage, etc.)
+---
 
+## 📌 Installation  
 
-### **How to Use It**
-1. **Go into the Again Folder**
-2. **Give it execution permissions**:
-   ```bash
-   chmod +x default.sh
-   ```
-3. **Run the script**:
-   ```bash
-   ./default.sh
-   ```
-4. **Run the tool globally:**
-   ```bash
-   again
-   ```
+### **1️⃣ Clone the Repository**  
 
-## Installation
+```bash
+git clone https://github.com/c01d43am/Again.git
+cd Again
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/c01d43am/Again.git
-   cd Again
-   ```
+### **2️⃣ Install Dependencies**  
 
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-3. Run the tool:
-   ```bash
-   python again.py
-   ```
+### **3️⃣ Run the Tool**  
 
-## Usage
+```bash
+python again.py
+```
 
-1. Execute the script:
-   ```bash
-   python again.py
-   ```
+---
 
-2. Choose an option from the interactive menu:
-   - **1**: Automation Tool
-   - **2**: Domain Recon & Scanning
-   - **3**: Vulnerability Scanning
-   - **4**: Exploits
-   - **5**: Exit
+## 📌 Usage  
 
-## Example Output
+### **Run the Tool:**
+```bash
+python again.py
+```
 
-```plaintext
+### **Select an Option from the Menu:**
+- **1**: Automation Tool  
+- **2**: Domain Recon & Scanning  
+- **3**: Vulnerability Scanning  
+- **4**: Exploits  
+- **5**: Exit  
+
+---
+
+## 📌 Running the Tool Globally  
+
+To make `Again` available globally:  
+
+```bash
+sudo cd Again
+sudo chmod +x default.sh
+```
+
+Now, you can run the tool from anywhere using:  
+
+```bash
+again
+```
+
+---
+
+## 📌 Example Output  
+
+```
 ░█████╗░░██████╗░░█████╗░██╗███╗░░██╗░█████╗░
 ██╔══██╗██╔════╝░██╔══██╗██║████╗░██║██╔══██╗
 ███████║██║░░██╗░███████║██║██╔██╗██║╚═╝███╔╝
@@ -110,18 +122,27 @@ https://github.com/c01d43am
 v1.0.0 by c01d43am
 ```
 
-## Contributing
+---
 
-Contributions are welcome! To contribute:
-1. Fork the repository.
-2. Create a feature branch.
-3. Submit a pull request with your changes.
+## 📌 Contributing  
 
-## License
+Contributions are welcome! To contribute:  
+1. **Fork the repository.**  
+2. **Create a feature branch.**  
+3. **Submit a pull request with your changes.**  
 
-This project is licensed under the **GNU General Public License v2.0**. See the `LICENSE` file for details.
+---
 
-## Disclaimer
+## 📌 License  
 
-This tool is intended for educational and ethical hacking purposes only. The author is not responsible for any misuse or illegal activities conducted using this tool.
+This project is licensed under the **GNU General Public License v2.0**. See the `LICENSE` file for details.  
 
+---
+
+## ⚠️ Disclaimer  
+
+This tool is intended **for educational and ethical hacking purposes only**. The author is **not responsible** for any misuse or illegal activities conducted using this tool.  
+
+---
+
+This **fixed** version ensures clarity, proper formatting, and corrects grammatical errors. 🚀 Let me know if you need further improvements!
