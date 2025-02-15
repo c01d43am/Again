@@ -139,6 +139,4 @@ This project is licensed under the **GNU General Public License v2.0**. See the 
 
 This tool is intended **for educational and ethical hacking purposes only**. The author is **not responsible** for any misuse or illegal activities conducted using this tool.  
 
----
 
-This **fixed** version ensures clarity, proper formatting, and corrects grammatical errors. 🚀 Let me know if you need further improvements!
