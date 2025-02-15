@@ -47,6 +47,22 @@ Ensure the following dependencies are installed before running `Again`:
 - `git` (for fetching updates)
 - Third-party security tools (e.g., Nessus, Nikto, Armitage, etc.)
 
+
+### **How to Use It**
+1. **Go into the Again Folder**
+2. **Give it execution permissions**:
+   ```bash
+   chmod +x default.sh
+   ```
+3. **Run the script**:
+   ```bash
+   ./default.sh
+   ```
+4. **Run the tool globally:**
+   ```bash
+   again
+   ```
+
 ## Installation
 
 1. Clone the repository:
