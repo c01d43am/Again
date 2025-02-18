@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'T
 from Tools.Design.font import Font_banner  # Importing display_banner from font.py
 from Tools.Automation.automationtool import automation_submenu
 from Tools.DomainScan.subdomain_menu import subdomain_submenu
-from Tools.DBMSInjection.exploit import exploit_tool_menu
+from Tools.DBMSInjection.sql import sql_tool_menu
 from Tools.VulunScan.vulnscan import Vulunscan_menu
 
 # Function to set execute permissions and run shell scripts
@@ -72,7 +72,7 @@ def main():
             elif choice == "3":
                 Vulunscan_menu()  # Vulnerability Scanning submenu
             elif choice == "4":
-                exploit_tool_menu()  # Exploits submenu
+                sql_tool_menu()  # Exploits submenu
             elif choice == "5":
                 updates_check_menu()  # Runs Updates & Check submenu
             elif choice == "6":
