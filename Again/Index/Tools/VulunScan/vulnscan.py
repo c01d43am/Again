@@ -1,5 +1,6 @@
 from ..VulunScan.nikto import nikto_menu
 from ..VulunScan.skipfish import skipfish_menu
+from ..VulunScan.wapiti import wapiti_menu
 
 def Vulunscan_menu():
     """Menu for the user to choose the tool."""
