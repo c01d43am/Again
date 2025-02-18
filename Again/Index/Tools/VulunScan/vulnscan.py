@@ -8,7 +8,8 @@ def Vulunscan_menu():
         print("\nVulnerability Scan Menu:")
         print("1. Nikto Scan")
         print("2. Skipfish Scan")
-        print("3. Exit")
+        print("3. Wapiti Scan")
+        print("4. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -17,6 +18,8 @@ def Vulunscan_menu():
         elif choice == "2":
             skipfish_menu()
         elif choice == "3":
+            wapiti_menu()
+        elif choice == "4":
             print("Exiting...")
             break
         else:
