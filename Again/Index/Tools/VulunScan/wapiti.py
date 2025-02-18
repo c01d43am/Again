@@ -37,7 +37,7 @@ def wapiti_menu():
     choice = input("Enter your choice (1-27): ")
 
     if choice == '1':
-        subdomain = input("Enter the subdomain URL: ")
+        subdomain = input("Enter the subdomain URL [https:// or https://]: ")
         command = f"wapiti -u {subdomain} -m all"
         run_wapiti_command(command)
     elif choice == '2':
