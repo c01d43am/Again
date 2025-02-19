@@ -20,6 +20,14 @@ def run_sqlmap(target_url):
 
 def sql_tool_menu():
     """Tool to check for SQL injection vulnerabilities using sqlmap."""
+    funny_responses = [
+        "Oops! That wasn't on the menu. Try again!",
+        "Nice try, but that's not an option!",
+        "Invalid choice. Are you testing my patience?",
+        "Error 404: Your choice not found!",
+        "You broke the menu... Just kidding, try again!"
+    ]
+
     while True:
         print("\nMySQL Injection Tool:")
         print("1. Run sqlmap on a Target URL")
@@ -27,19 +35,15 @@ def sql_tool_menu():
 
         choice = input("Enter your choice [1-2]: ")
         if choice == "1":
-            target_url = target_url
-            run_sqlmap(target_url)  # Run sqlmap for the given URL
+            target_url = input("Enter the target URL (including http/https): ")
+            if target_url:
+                run_sqlmap(target_url)  # Run sqlmap for the given URL
+            else:
+                print("Invalid URL. Please try again.")
         elif choice == "2":
             print("Returning to Main Menu.")
             break
         else:
-            funny_responses = [
-                "Oops! That wasn't on the menu. Try again!",
-                "Nice try, but that's not an option!",
-                "Invalid choice. Are you testing my patience?",
-                "Error 404: Your choice not found!",
-                "You broke the menu... Just kidding, try again!"
-            ]
             print(random.choice(funny_responses))
 
 def main_menu():
