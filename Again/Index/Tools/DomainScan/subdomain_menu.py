@@ -3,6 +3,7 @@ from Tools.DomainScan.nmap_tool import nmap_host_discovery
 from Tools.DomainScan.feroxbuster_tool import feroxbuster_menu  # Updated to call the menu function
 from Tools.DomainScan.gobuster_tool import gobuster_menu
 from Tools.DomainScan.dirb_tool import dirb_submenu  # Import the dirb submenu
+from Tools.DomainScan.Normal import get_local_ip
 
 def subdomain_submenu():
     """Submenu to handle subdomain-related tasks."""
@@ -13,7 +14,8 @@ def subdomain_submenu():
         print("3. Run Feroxbuster")
         print("4. Run Gobuster")
         print("5. Run Nmap Scan")
-        print("6. Exit")
+        print("6. Get Local IP Address")
+        print("7. Return to Main Menu\n")
         choice = input("Please choose an option (1-6): ")
         
         if choice == "1":
@@ -28,6 +30,8 @@ def subdomain_submenu():
         elif choice == "5":
             nmap_host_discovery()    # Call the Nmap function
         elif choice == "6":
+            get_local_ip()      # Call the get_local_ip function
+        elif choice == "7":
             print("Exiting the subdomain submenu...")
             break
         else:

@@ -78,7 +78,7 @@ def Font_banner():
     print(f"{color}{banner}{reset}")
 
     # Display version at the bottom left corner
-    version = f"{green}\t\t\tv0.1.0 by c01d43am{reset}"
+    version = f"{green}\t\t\tv0.1.1 by c01d43am{reset}"
     print("\t\thttps://github.com/c01d43am")
     print(f"\n{version}\n")
 
