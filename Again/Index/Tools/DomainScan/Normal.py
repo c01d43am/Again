@@ -86,10 +86,12 @@ import socket
 import platform
 import subprocess
 import concurrent.futures
+import re
 
 # ANSI color codes
 RED = "\033[91m"
 GREEN = "\033[92m"
+CYAN = "\033[96m"
 RESET = "\033[0m"
 
 def get_local_ip():
@@ -99,7 +101,7 @@ def get_local_ip():
         s.connect(("8.8.8.8", 80))
         local_ip = s.getsockname()[0]
         s.close()
-        print(f"[DEBUG] Local IP Detected: {local_ip}")
+        print(f"[DEBUG] Local IP Detected: {CYAN}{local_ip}{RESET}")
         return local_ip
     except Exception as e:
         print(f"{RED}Error getting local IP: {e}{RESET}")
@@ -122,7 +124,7 @@ def get_scan_range(local_ip):
         elif 192 <= first_octet <= 223:  # Class C (255.255.255.0)
             print("[INFO] Class C network detected.")
             return [f"{first_octet}.{octets[1]}.{octets[2]}."]
-        
+
         elif 224 <= first_octet <= 239:  # Class D (Multicast)
             print("[INFO] Class D network detected (Multicast).")
             return [f"{first_octet}.{i}.{j}." for i in range(256) for j in range(256)]
@@ -151,8 +153,36 @@ def ping(ip):
         print(f"{RED}Error pinging {ip}: {e}{RESET}")
     return None
 
+def arp_scan():
+    """Retrieve all IP and MAC addresses of connected devices using ARP."""
+    print("\n[INFO] Running ARP scan to detect all connected devices...\n")
+    devices = []
+    try:
+        if platform.system() == "Windows":
+            cmd = ["arp", "-a"]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            pattern = re.findall(r"(\d+\.\d+\.\d+\.\d+)\s+([a-fA-F0-9:-]+)", result.stdout)
+        else:
+            cmd = ["ip", "neigh"]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            pattern = re.findall(r"(\d+\.\d+\.\d+\.\d+)\s+.*\s+([a-fA-F0-9:-]+)", result.stdout)
+
+        if pattern:
+            print("Connected Devices:")
+            print("-----------------------------------------")
+            print(f"{CYAN}IP Address\t\tMAC Address{RESET}")
+            print("-----------------------------------------")
+            for ip, mac in pattern:
+                devices.append((ip, mac))
+                print(f"{GREEN}{ip}\t{mac}{RESET}")
+
+    except Exception as e:
+        print(f"{RED}Error performing ARP scan: {e}{RESET}")
+    
+    return devices
+
 def scan():
-    """Scan the network for active hosts."""
+    """Scan the network for active hosts using ping and ARP scan."""
     local_ip = get_local_ip()
     if not local_ip:
         print("Could not determine local IP address.")
@@ -167,7 +197,7 @@ def scan():
     print("----------------------------------------------------\n")
 
     active_hosts = []
-    
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
         future_results = {executor.submit(ping, f"{subnet}{i}"): f"{subnet}{i}" for subnet in scan_ranges for i in range(1, 255)}
         
@@ -183,5 +213,9 @@ def scan():
     else:
         print("\nNo active hosts found.")
 
+    # Run ARP scan to detect all connected devices
+    arp_scan()
+
 if __name__ == "__main__":
     scan()
+print("")
