@@ -79,5 +79,3 @@ def scan():
         print("\n".join(active_hosts))
     else:
         print("\nNo active hosts found.")
-
-scan()
