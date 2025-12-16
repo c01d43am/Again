@@ -7,7 +7,6 @@ def run_sqlmap_command(command):
 
 def run_sqlmap(target_url):
     """Run sqlmap to check for SQL injection vulnerabilities on the target URL."""
-    python_cmd = "python3" if subprocess.run("which python3", shell=True, capture_output=True).returncode == 0 else "python"
     print(f"\nRunning sqlmap on {target_url} ")
     try:
         command = f"sqlmap -u {target_url} --batch --risk=3 --level=5"

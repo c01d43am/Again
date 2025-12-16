@@ -46,7 +46,7 @@ def check_for_updates():
 def run_index():
     print("\nExecuting Index...\n")
     try:
-        subprocess.run(["python3", "Again/Index/index.py"], check=True)
+        subprocess.run([sys.executable, "Again/Index/index.py"], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Execution failed: {e}")
     except Exception as e:
