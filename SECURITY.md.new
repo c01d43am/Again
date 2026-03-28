@@ -28,11 +28,11 @@ We request that security researchers:
 - Follow ethical hacking guidelines.  
 
 ## Resolved Security Alerts (2024)
-- **urllib3 Decompression-bomb safeguards bypassed when following HTTP redirects (High)**: Fixed in urllib3>=2.0.7. Current: 2.6.3. No direct usage found.
-- **Requests Insecure Temp File Reuse in extract_zipped_paths() (Moderate)**: Fixed in requests>=2.32.0. Current: 2.33.0.
-- **Pygments ReDoS due to Inefficient Regex (Low)**: Fixed in Pygments>=2.18.0. Current: 2.19.2 (transitive via rich).
+- **urllib3 Decompression-bomb (High)**: Fixed in urllib3>=2.0.7. Current: 2.6.2. No direct usage.
+- **requests Insecure Temp File (Moderate)**: Fixed in requests>=2.32.0. Current: 2.32.5.
+- **Pygments ReDoS (Low)**: Fixed in Pygments>=2.18.0. Current: 2.19.2 (transitive).
 
-Dependencies pinned in requirements.txt. No vulnerable code patterns found via codebase search. Dependencies upgraded successfully.
+Pins added to requirements.txt. No vulnerable code found.
 
 Thank you for helping keep **Again** secure! 🚀  
 

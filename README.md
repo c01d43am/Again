@@ -13,6 +13,7 @@
 ✅ **Exploits:** Test for known vulnerabilities using automated tools.  
 ✅ **Extensibility:** Easily customizable to add new tools.  
 ✅ **Auto-Update:** Fetches the latest changes from the GitHub repository.  
+✅ **Security Hardened:** Dependencies pinned to mitigate known CVEs (see SECURITY.md).
 
 ---
 
@@ -137,6 +138,7 @@ This project is licensed under the **GNU General Public License v2.0**. See the 
 
 ## ⚠️ Disclaimer  
 
-This tool is intended **for educational and ethical hacking purposes only**. The author is **not responsible** for any misuse or illegal activities conducted using this tool.  
+This tool is intended **for educational and ethical hacking purposes only**. The author is **not responsible** for any misuse or illegal activities conducted using this tool. 
 
+**Security:** See updated SECURITY.md and requirements.txt for latest mitigations.
 
