@@ -9,13 +9,17 @@ SCRIPT_NAME="again.py"
 
 # Detect where this installer is being run from
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR"
+SOURCE_DIR=""
 
-# If installer is inside repository root where Again/ exists, prefer repository root
-if [ -d "$SCRIPT_DIR/$TOOL_NAME" ]; then
-    SOURCE_DIR="$SCRIPT_DIR/$TOOL_NAME"
-elif [ "$(basename "$SCRIPT_DIR")" = "$TOOL_NAME" ]; then
+# Resolve the real project root by locating again.py
+if [ -f "$SCRIPT_DIR/$SCRIPT_NAME" ]; then
     SOURCE_DIR="$SCRIPT_DIR"
+elif [ -f "$SCRIPT_DIR/$TOOL_NAME/$SCRIPT_NAME" ]; then
+    SOURCE_DIR="$SCRIPT_DIR/$TOOL_NAME"
+else
+    echo "[-] ERROR: Could not locate $SCRIPT_NAME from installer directory."
+    echo "[-] Checked: $SCRIPT_DIR and $SCRIPT_DIR/$TOOL_NAME"
+    exit 1
 fi
 
 echo "[*] Installer location: $SCRIPT_DIR"
