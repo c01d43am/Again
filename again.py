@@ -47,6 +47,8 @@ def run_index():
     print("\nExecuting Index...\n")
     try:
         subprocess.run([sys.executable, "Again/Index/index.py"], check=True)
+    except KeyboardInterrupt:
+        print("\n[!] KeyboardInterrupt detected. Exiting gracefully...")
     except subprocess.CalledProcessError as e:
         print(f"Execution failed: {e}")
     except Exception as e:
@@ -62,4 +64,7 @@ def start_tool():
     run_index()  # Execute index.py
 
 if __name__ == "__main__":
-    start_tool()
+    try:
+        start_tool()
+    except KeyboardInterrupt:
+        print("\n[!] KeyboardInterrupt detected. Exiting gracefully...")
