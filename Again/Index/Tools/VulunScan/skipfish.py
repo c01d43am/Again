@@ -1,12 +1,6 @@
 import subprocess
 
-def install_tool(tool_name):
-    """Checks if a tool is installed and installs it if not found."""
-    try:
-        subprocess.run(["which", tool_name], check=True, capture_output=True)
-    except subprocess.CalledProcessError:
-        print(f"{tool_name} not found. Installing...")
-        subprocess.run(["sudo", "apt", "install", "-y", tool_name], check=True)
+from ..Support.install_tool import install_tool
 
 def check_and_install_skipfish():
     """Checks if Skipfish is installed. Installs it if not found."""
